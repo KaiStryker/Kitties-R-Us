@@ -1,0 +1,35 @@
+.movingHead {
+    animation: moveHead 5s infinite;
+}
+
+.ignite {
+    animation: igniteColors 1s infinite;
+}
+
+.wiggle {
+    animation: tailWiggle 5s infinite;
+}
+
+@keyframes moveHead {
+    0%  { transform: rotate(0deg);}
+    25% { transform: rotate(5deg);}
+    50% { transform: rotate(-5deg);}
+    75% { transform: rotate(5deg);}
+    100%{ transform: rotate(0deg);}
+}
+
+@keyframes igniteColors {
+    0%	{ background-color: white;}
+    /* 25%	{ background-color: #1056c0;}
+    50%	{ background-color: #ef0a1a;}
+    75%	{ background-color: #254878;} */
+    100%{ background-color: #e57373;}
+}
+
+@keyframes tailWiggle {
+    0%	{ transform: rotate(45deg);}
+    25%	{ transform: rotate(68deg);}
+    50%	{ transform: rotate(45deg);}
+    75%	{ transform: rotate(68deg);}
+    100%{ transform: rotate(45deg);}
+}
