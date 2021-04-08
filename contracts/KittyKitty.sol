@@ -1,6 +1,7 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.5.12;
 
 import "./IERC721.sol";
+import "./IERC721Receiver.sol";
 import "./Ownable.sol";
 
 contract Kittycontract is IERC721, Ownable {
@@ -14,14 +15,18 @@ contract Kittycontract is IERC721, Ownable {
     string public constant _name = "KittyKittys";
     string public constant _symbol = "KTK";
 
+    bytes4 internal constant MAGIC_ERC721_RECEIVED = bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
+    bytes4 private constant _INTERFACE_ID_ERC721 = 0x80ac58cd;
+    bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
+
     Kitty[] public kitties;
 
     struct Kitty {
-          uint256 genes;
-          uint64 birthTime;
-          uint32 mumId;
-          uint32 dadId;
-          uint16 generation;
+        uint256 genes;
+        uint64 birthTime;
+        uint32 mumId;
+        uint32 dadId;
+        uint16 generation;
     }
 
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
@@ -34,9 +39,13 @@ contract Kittycontract is IERC721, Ownable {
         uint256 mumId, 
         uint256 dadId, 
         uint256 genes
-        );
+    );
 
     uint256 public gen0Counter;
+
+    function supportsInterface(bytes4 _interfaceId) external view returns (bool){
+        return ( _interfaceId == _INTERFACE_ID_ERC721 || _interfaceId == _INTERFACE_ID_ERC165);
+    }
 
     function createKittyGen0(uint256 _genes) public onlyOwner returns (uint256) {
        require(gen0Counter < CREATION_LIMIT_GEN0);
@@ -137,14 +146,14 @@ contract Kittycontract is IERC721, Ownable {
     }
 
     function approve(address _approved, uint256 kittenId) external{
-        require(owns(msg.sender, kittenId));
+        require(_owns(msg.sender, kittenId));
 
         _approve(kittenId, _approved);
         emit Approval(msg.sender, _approved, kittenId);
 
     }
 
-    function setApprovalForAll(address _operator, bool approved) public{
+    function setApprovalForAll(address _operator, bool _approved) public{
         require(_operator != msg.sender);
 
         _setApprovalForAll(msg.sender, _operator, _approved);
@@ -158,7 +167,26 @@ contract Kittycontract is IERC721, Ownable {
     }
 
     function isApprovedForAll(address _owner, address _operator) public view returns (bool){
-        return _operatorApprovals[owner][_operator];
+        return _operatorApprovals[_owner][_operator];
+    }
+
+    function _safeTransfer(address _from, address _to, uint256 kittenId, bytes memory _data) internal {
+        
+        _transfer(_from, _to, kittenId);
+        require(_checkERC721Support(_from, _to, kittenId, _data));
+    }   
+    function transferFrom(address _from, address _to, uint256 kittenId)  public {
+        require( _isApprovedOrOwner(msg.sender, _from, _to, kittenId) );  
+        _transfer(_from, _to, kittenId);
+    }
+
+    function safeTransferFrom(address _from, address _to, uint256 kittenId, bytes memory data) public {
+        require( _isApprovedOrOwner(msg.sender, _from, _to, kittenId) ); 
+        _safeTransfer(_from, _to, kittenId, data);
+    }
+
+    function safeTransferFrom(address _from, address _to, uint256 kittenId) public {
+        safeTransferFrom(_from, _to, kittenId, "");
     }
 
     function _approve(uint256 _kittenId, address _approved) internal{
@@ -167,5 +195,36 @@ contract Kittycontract is IERC721, Ownable {
 
     function _setApprovalForAll(address _owner, address _operator, bool _approved) internal {
         _operatorApprovals[_owner][_operator] = _approved;
+    }
+
+    function _checkERC721Support(address _from, address _to, uint256 kittenId, bytes memory _data) internal returns (bool) {
+        if (!_isContract(_to) ){
+            return true;
+        }
+        bytes4 returnData = IERC721Receiver(_to).onERC721Received(msg.sender, _from, kittenId, _data);
+        return returnData == MAGIC_ERC721_RECEIVED;
+    }
+
+    function _isContract(address _to) view internal returns (bool){
+        uint32 size;
+        assembly{
+            size := extcodesize(_to)
+        }
+        return size > 0;
+    }
+
+    function _approvedFor( address _claimant, uint256 kittenId) internal view returns (bool) {
+        return kittyIndexToApproved[kittenId] == _claimant;
+    }
+
+    function _isApprovedOrOwner( address _spender, address _from, address _to, uint256 kittenId) internal view returns (bool){
+        require (_owns(_from, kittenId)); //From owns the token
+        require (_to != address(0)); // TO address is not zero address
+        require (kittenId < kitties.length); //Token must exist
+
+        //Spender is from OR spender is approved for kittenId OR spender is operator from _from
+        return (_spender == _from
+        || _approvedFor(_spender, kittenId)
+        || isApprovedForAll(_from, _spender));
     }
 }
