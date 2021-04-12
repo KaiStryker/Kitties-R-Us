@@ -6,7 +6,8 @@ var abi;
 
 $(document).ready(function(){
     window.ethereum.enable().then(function(accounts){
-        instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0], gas:300000, gasPrice:20000000000});
+        instance = new web3.eth.Contract(abi, contractAddress, 
+        {from: accounts[0], gas:300000, gasPrice:20000000000});
         user = accounts[0];
 
         console.log(instance);
@@ -49,7 +50,7 @@ var transferCall = async () => {
         })
 }
 
-function getCurrentDna(){
+var getCurrentDna = () => {
    var dna = ''
     dna += $('#dnabody').html()
     dna += $('#dnamouth').html()
@@ -65,7 +66,7 @@ function getCurrentDna(){
     return parseInt(dna)
 }
 
-function createKitty(){
+var createKitty = () => {
     var dnaStr = getCurrentDna();
     instance.methods.createKittyGen0(dnaStr).send()
     .on("transactionHash", function(hash){
@@ -84,3 +85,28 @@ function createKitty(){
     .catch(error => console.error(error))
     // create landing page that displays Kitty created on the blockchain
 }
+
+// Create a function that pulls information from blockchain about Gen0 kitties for sale and returns genes
+var kittyLog = [];
+
+var pullCatalog = async() => {
+    //prone to being updated once marketplace is integrated
+    var num = await instance.methods.gen0Counter().call();
+    pullKitty(15); 
+  };
+
+var pullKitty = async(num) => {
+        var kittyLog = [];
+
+        for (let i = 0; i < num; i++) {
+            let kitties = await instance.methods.getKitty(i).call();
+            let kittyGenes = kitties['genes'];
+            let kittyGeneration = kitties['generation'];
+            kittyLog.push({kittyGenes, i, kittyGeneration}); 
+            console.log(kittyLog);  
+        }
+        Catalog_onLaunch(kittyLog);
+    return kittyLog;
+};
+
+

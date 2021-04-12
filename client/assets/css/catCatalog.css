@@ -1,0 +1,20 @@
+.cattributes {
+    padding: 25px;
+    background-color: #ededed;
+    border-radius: 10px;
+    position: relative;
+    width: 312px;
+}
+
+.dnaDiv{
+    position: relative;
+    left: 0;
+    bottom: 0;
+    Margin: 15px;
+}
+
+.featureBox{
+Height: 462px;
+Background-color: ghostwhite;
+min-width: 298px;
+}

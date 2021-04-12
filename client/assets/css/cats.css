@@ -1,7 +1,7 @@
 *, *::before, *::after {
     margin: 0;
     padding: 0;
-    box-sizing: inherit;
+    box-sizing:inherit;
 }
 html {
     box-sizing: border-box;
@@ -316,12 +316,10 @@ body {
 
 #catColors {
     margin-top: 1rem;
-    margin-bottom: -2rem;
 }
 
 #catAttributes{
     margin-top: 1rem;
-    margin-bottom: -2rem;
 }
 
 

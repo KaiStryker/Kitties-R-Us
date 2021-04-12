@@ -43,18 +43,25 @@
 
 #kittyButtons {
     position: relative;
-    left: -30%;
-    margin: auto;
-    position: relative;
-    padding: 3px;
-    text-align: center;
+    display: flex;
+    margin: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+
+}
+
+.defaultButton{
+    margin: 5px;
+}
+
+.randomButton{
+    margin: 5px;
 }
 
 .submitButton{
     position: relative;
-    left: 42%;
-    top: 76px;
-    margin: auto;
+    margin: 5px;
 }
 
 /* Popup box BEGIN */
@@ -143,6 +150,15 @@
     border-radius: 39%;
 }
 /* Popup box ENDS */
+
+.flexwrap{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: initial;
+    justify-content: flex-start;
+    align-content: space-between;
+    align-items: flex-start;
+}
 
 
 

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Catalog </title>
+        <script type="text/javascript" src="assets/js/jquery-3.4.1.js"></script>
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <script src="assets/bootstrap/js/popper.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/js/web3.min.js"></script>
+        <script src="./abi.js"></script>
+        <script src="./index.js"></script>
+      
+        <link rel="stylesheet" href="assets/css/mystyle.css">
+        <link rel="stylesheet" href="assets/css/colors.css">
+        <link rel="stylesheet" href="assets/css/factory.css">
+        <link rel="stylesheet" href="assets/css/frontend.css">
+        <link rel="stylesheet" href="assets/css/catCatalog.css">
+        <link rel="stylesheet" href="assets/css/cats.css">
+        <link rel="stylesheet" href="assets/css/animations.css">
+
+       
+    
+      </head>
+   
+
+      <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+          <div class="container-fluid">
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-mdb-toggle="collapse"
+              data-mdb-target="#navbarExample01"
+              aria-controls="navbarExample01"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarExample01">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item active">
+                  <a class="nav-link" aria-current="page" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="k-factory">K-Factory</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="catalog.html">Catalog</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="breeding">Breeding</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- Navbar -->
+      
+        <!-- Jumbotron -->
+    
+    
+        <!-- Jumbotron -->
+  </header>
+
+  <div class="animation-wrapper">
+      <div class="particle particle-1"></div>
+  </div>
+
+  <div class="container p-5" style="margin-top: 12vh;margin-bottom: 10vh;">
+
+    <div align="center">
+    <h1 class="c-white">Catalog</h1>
+</div>
+
+<div class="container middleBox">
+    <div class="row" id="catsDiv">
+    </div>
+
+    <div class="row" id="ownersCatsDiv hidden">
+
+    </div>
+
+</div>
+
+</div>
+  
+<footer align="left">
+    <p>Ivan on Tech Academy Bootcamp July 2020</p>
+</footer>
+
+</body>
+
+<script>
+    // when page load create the catalog
+$(document).ready(() => {
+    setTimeout(() => {
+        pullCatalog()
+    }, 1000)
+});
+</script>
+
+<script src="assets/js/colors.js"></script>
+<script src="assets/js/catalog/catBuild.js"></script>
+<script src="assets/js/catalog/catCatalog.js"></script>
+
+
+
+
+</html>
