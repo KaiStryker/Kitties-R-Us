@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitty Breeding</title>
+    <script type="text/javascript" src="assets/js/jquery-3.4.1.js"></script>
+    
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <script src="assets/bootstrap/js/popper.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/web3.min.js"></script>
+    <script src="./abi.js"></script>
+
+    <link rel="stylesheet" href="assets/css/mystyle.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/glider.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <link rel="stylesheet" href="assets/css/cats.css">
+    <link rel="stylesheet" href="assets/css/colors.css">
+    <link rel="stylesheet" href="assets/css/factory.css">
+    <link rel="stylesheet" href="assets/css/frontend.css">
+    <link rel="stylesheet" href="assets/css/catCatalog.css">
+    <script src="assets/js/glider.js"></script>
+
+    <script>
+    window.addEventListener('load',function(){
+        document.querySelector('.glider').addEventListener('glider-slide-visible', function(event){
+            var glider = Glider(this);
+            console.log('Slide Visible %s', event.detail.slide)
+        });
+        document.querySelector('.glider').addEventListener('glider-slide-hidden', function(event){
+            console.log('Slide Hidden %s', event.detail.slide)
+        });
+        document.querySelector('.glider').addEventListener('glider-refresh', function(event){
+            console.log('Refresh')
+        });
+        document.querySelector('.glider').addEventListener('glider-loaded', function(event){
+            console.log('Loaded')
+        });
+
+        window._ = new Glider(document.querySelector('.glider'), {
+            slidesToShow: 1, //'auto',
+            slidesToScroll: 1,
+            itemWidth: 300,
+            draggable: true,
+            scrollLock: true,
+            dots: '.dots',
+            rewind: false,
+            arrows: {
+                prev: '.glider-prev',
+                next: '.glider-next'
+            },
+            responsive: [
+            {
+                // screens greater than >= 775px
+                breakpoint: 775,
+                settings: {
+                    // Set to `auto` and provide item width to adjust to viewport
+                    slidesToShow: 'auto',
+                    slidesToScroll: 'auto',
+                    itemWidth: 150,
+                    duration: 0.25
+                }
+                },{
+                // screens greater than >= 1024px
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    itemWidth: 150,
+                    duration: 0.25
+                }
+            }
+          ]
+        });
+      });
+    </script>
+
+    <style type="text/css">
+        * {
+            box-sizing: border-box
+        }
+        html, body {
+            width: 100%;
+            overflow: scroll;
+        }
+        .glider-contain {
+            width: 100%;
+            max-width: 955px;
+            margin: 0 auto;
+        }
+        .glider-slide {
+            min-height: 150px;
+        }
+        .glider-slide img {
+            width: 100%;
+        }
+</style>
+</head>
+<body>
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+          <div class="container-fluid">
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-mdb-toggle="collapse"
+              data-mdb-target="#navbarExample01"
+              aria-controls="navbarExample01"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarExample01">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item active">
+                  <a class="nav-link" aria-current="page" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="k-factory">K-Factory</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="catalog.html">Catalog</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="breeding.html">Breeding</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- Navbar -->
+      
+        <!-- Jumbotron -->
+    
+        <!-- Jumbotron -->
+  </header>
+
+  <div class="animation-wrapper">
+    <div class="particle particle-1"></div>
+</div>
+
+<div class="container p-5" style="margin-top: 12vh;margin-bottom: 10vh;display: flex;
+flex-direction: column;">
+
+    <div align="center">
+    <h1 class="c-white">Breeding</h1>
+    </div>
+
+<div class="container middleBox" style="margin-top: 40px;
+margin-bottom: 40px;">
+
+    <div class="row" id="catsDiv">
+        <div class="featureBox" id="BredKitty">
+            <div class="cat__ear" id="ears">
+                <div id="leftEar" class="cat__ear--left">
+                    <div class="cat__ear--left-inside"></div>
+                </div>
+                <div id="rightEar" class="cat__ear--right">
+                    <div class="cat__ear--right-inside"></div>
+                </div>
+            </div>
+            <div id="head" class="cat__head">
+                <div id="midDot" class="cat__head-dots">
+                    <div id="leftDot" class="cat__head-dots_first"></div>
+                    <div id="rightDot" class="cat__head-dots_second"></div>
+                </div>
+                <div class="cat__eye">
+                    <div class="cat__eye--left">
+                        <span class="pupil-left"></span>
+                    </div>
+                    <div class="cat__eye--right">
+                        <span class="pupil-right"></span>
+                    </div>
+                </div>
+                <div class="cat__facedetail-left" id="details"></div>
+                <div class="cat__facedetail-right" id= details2></div>
+                <div class="cat__nose"></div>
+                <div class="cat__mouth-contour"></div>
+                <div class="cat__mouth-left"></div>
+                <div class="cat__mouth-right"></div>
+                <div class="cat__whiskers-left"></div>
+                <div class="cat__whiskers-right"></div>
+            </div>
+            <div class="cat__body">
+                <div class="cat__chest"></div>
+                <div class="cat__chest_inner"></div>
+                <div class="cat__paw-left"></div>
+                <div class="cat__paw-left_inner"></div>
+                <div class="cat__paw-right"></div>
+                <div class="cat__paw-right_inner"></div>
+                <div id="tail" class="cat__tail"></div>
+            </div>
+        </div>
+        <div class="featureBox" id="BredKitty">
+            <div class="cat__ear" id="ears">
+                <div id="leftEar" class="cat__ear--left">
+                    <div class="cat__ear--left-inside"></div>
+                </div>
+                <div id="rightEar" class="cat__ear--right">
+                    <div class="cat__ear--right-inside"></div>
+                </div>
+            </div>
+            <div id="head" class="cat__head">
+                <div id="midDot" class="cat__head-dots">
+                    <div id="leftDot" class="cat__head-dots_first"></div>
+                    <div id="rightDot" class="cat__head-dots_second"></div>
+                </div>
+                <div class="cat__eye">
+                    <div class="cat__eye--left">
+                        <span class="pupil-left"></span>
+                    </div>
+                    <div class="cat__eye--right">
+                        <span class="pupil-right"></span>
+                    </div>
+                </div>
+                <div class="cat__facedetail-left" id="details"></div>
+                <div class="cat__facedetail-right" id= details2></div>
+                <div class="cat__nose"></div>
+                <div class="cat__mouth-contour"></div>
+                <div class="cat__mouth-left"></div>
+                <div class="cat__mouth-right"></div>
+                <div class="cat__whiskers-left"></div>
+                <div class="cat__whiskers-right"></div>
+            </div>
+            <div class="cat__body">
+                <div class="cat__chest"></div>
+                <div class="cat__chest_inner"></div>
+                <div class="cat__paw-left"></div>
+                <div class="cat__paw-left_inner"></div>
+                <div class="cat__paw-right"></div>
+                <div class="cat__paw-right_inner"></div>
+                <div id="tail" class="cat__tail"></div>
+            </div>
+        </div>
+        <div class="featureBox" id="BredKitty">
+            <div class="cat__ear" id="ears">
+                <div id="leftEar" class="cat__ear--left">
+                    <div class="cat__ear--left-inside"></div>
+                </div>
+                <div id="rightEar" class="cat__ear--right">
+                    <div class="cat__ear--right-inside"></div>
+                </div>
+            </div>
+            <div id="head" class="cat__head">
+                <div id="midDot" class="cat__head-dots">
+                    <div id="leftDot" class="cat__head-dots_first"></div>
+                    <div id="rightDot" class="cat__head-dots_second"></div>
+                </div>
+                <div class="cat__eye">
+                    <div class="cat__eye--left">
+                        <span class="pupil-left"></span>
+                    </div>
+                    <div class="cat__eye--right">
+                        <span class="pupil-right"></span>
+                    </div>
+                </div>
+                <div class="cat__facedetail-left" id="details"></div>
+                <div class="cat__facedetail-right" id= details2></div>
+                <div class="cat__nose"></div>
+                <div class="cat__mouth-contour"></div>
+                <div class="cat__mouth-left"></div>
+                <div class="cat__mouth-right"></div>
+                <div class="cat__whiskers-left"></div>
+                <div class="cat__whiskers-right"></div>
+            </div>
+            <div class="cat__body">
+                <div class="cat__chest"></div>
+                <div class="cat__chest_inner"></div>
+                <div class="cat__paw-left"></div>
+                <div class="cat__paw-left_inner"></div>
+                <div class="cat__paw-right"></div>
+                <div class="cat__paw-right_inner"></div>
+                <div id="tail" class="cat__tail"></div>
+            </div>
+        </div>
+    </div>
+
+</div>      
+
+    <div class="glider-contain">
+        <h3 class="c-white">Select Mom and Dad Genes for Breeding</h1>
+
+        
+        
+        
+        
+    <div class="glider">
+        <label for="kit-1" class="test">
+            <div class="featureBox">
+                <div class="cat__ear" id="ears">
+                    <div id="leftEar" class="cat__ear--left">
+                        <div class="cat__ear--left-inside"></div>
+                    </div>
+                    <div id="rightEar" class="cat__ear--right">
+                        <div class="cat__ear--right-inside"></div>
+                    </div>
+                </div>
+                <div id="head" class="cat__head">
+                    <div id="midDot" class="cat__head-dots">
+                        <div id="leftDot" class="cat__head-dots_first"></div>
+                        <div id="rightDot" class="cat__head-dots_second"></div>
+                    </div>
+                    <div class="cat__eye">
+                        <div class="cat__eye--left">
+                            <span class="pupil-left"></span>
+                        </div>
+                        <div class="cat__eye--right">
+                            <span class="pupil-right"></span>
+                        </div>
+                    </div>
+                    <div class="cat__facedetail-left" id="details"></div>
+                    <div class="cat__facedetail-right" id= details2></div>
+                    <div class="cat__nose"></div>
+                    <div class="cat__mouth-contour"></div>
+                    <div class="cat__mouth-left"></div>
+                    <div class="cat__mouth-right"></div>
+                    <div class="cat__whiskers-left"></div>
+                    <div class="cat__whiskers-right"></div>
+                </div>
+                <div class="cat__body">
+                    <div class="cat__chest"></div>
+                    <div class="cat__chest_inner"></div>
+                    <div class="cat__paw-left"></div>
+                    <div class="cat__paw-left_inner"></div>
+                    <div class="cat__paw-right"></div>
+                    <div class="cat__paw-right_inner"></div>
+                    <div id="tail" class="cat__tail"></div>
+                </div>
+            </div>
+        </label>
+        <input type="checkout" name="Kitty" id="kit-1" value="1" checked onclick="logvalue('kit-1')">
+        <label for="kit-2" class="test">
+        <div class="featureBox">
+            <div class="cat__ear" id="ears">
+                <div id="leftEar" class="cat__ear--left">
+                    <div class="cat__ear--left-inside"></div>
+                </div>
+                <div id="rightEar" class="cat__ear--right">
+                    <div class="cat__ear--right-inside"></div>
+                </div>
+            </div>
+            <div id="head" class="cat__head">
+                <div id="midDot" class="cat__head-dots">
+                    <div id="leftDot" class="cat__head-dots_first"></div>
+                    <div id="rightDot" class="cat__head-dots_second"></div>
+                </div>
+                <div class="cat__eye">
+                    <div class="cat__eye--left">
+                        <span class="pupil-left"></span>
+                    </div>
+                    <div class="cat__eye--right">
+                        <span class="pupil-right"></span>
+                    </div>
+                </div>
+                <div class="cat__facedetail-left" id="details"></div>
+                <div class="cat__facedetail-right" id= details2></div>
+                <div class="cat__nose"></div>
+                <div class="cat__mouth-contour"></div>
+                <div class="cat__mouth-left"></div>
+                <div class="cat__mouth-right"></div>
+                <div class="cat__whiskers-left"></div>
+                <div class="cat__whiskers-right"></div>
+            </div>
+            <div class="cat__body">
+                <div class="cat__chest"></div>
+                <div class="cat__chest_inner"></div>
+                <div class="cat__paw-left"></div>
+                <div class="cat__paw-left_inner"></div>
+                <div class="cat__paw-right"></div>
+                <div class="cat__paw-right_inner"></div>
+                <div id="tail" class="cat__tail"></div>
+            </div>
+        </div>
+        </label>
+        <input type="checkout" name="Kitty" id="kit-2" value="2">
+        <label for="kit-3" class="test">
+        <div class="featureBox">
+            <div class="cat__ear" id="ears">
+                <div id="leftEar" class="cat__ear--left">
+                    <div class="cat__ear--left-inside"></div>
+                </div>
+                <div id="rightEar" class="cat__ear--right">
+                    <div class="cat__ear--right-inside"></div>
+                </div>
+            </div>
+            <div id="head" class="cat__head">
+                <div id="midDot" class="cat__head-dots">
+                    <div id="leftDot" class="cat__head-dots_first"></div>
+                    <div id="rightDot" class="cat__head-dots_second"></div>
+                </div>
+                <div class="cat__eye">
+                    <div class="cat__eye--left">
+                        <span class="pupil-left"></span>
+                    </div>
+                    <div class="cat__eye--right">
+                        <span class="pupil-right"></span>
+                    </div>
+                </div>
+                <div class="cat__facedetail-left" id="details"></div>
+                <div class="cat__facedetail-right" id= details2></div>
+                <div class="cat__nose"></div>
+                <div class="cat__mouth-contour"></div>
+                <div class="cat__mouth-left"></div>
+                <div class="cat__mouth-right"></div>
+                <div class="cat__whiskers-left"></div>
+                <div class="cat__whiskers-right"></div>
+            </div>
+            <div class="cat__body">
+                <div class="cat__chest"></div>
+                <div class="cat__chest_inner"></div>
+                <div class="cat__paw-left"></div>
+                <div class="cat__paw-left_inner"></div>
+                <div class="cat__paw-right"></div>
+                <div class="cat__paw-right_inner"></div>
+                <div id="tail" class="cat__tail"></div>
+            </div>
+        </div>
+        </label>
+        <input type="checkout" name="Kitty" id="kit-3" value="3">
+        </div>
+  
+    <button aria-label="Previous" class="glider-prev">«</button>
+    <button aria-label="Next" class="glider-next">»</button>
+    <div role="tablist" class="dots"></div>
+  </div>
+
+
+
+
+
+
+
+</div>
+
+<script>
+var logvalue = (id) => {
+
+    var input = document.getElementById(id);
+    console.log(input.value)
+}
+</script>
+
+    
+    
+</body>
+</html>
