@@ -87,12 +87,12 @@ var createKitty = () => {
 }
 
 // Create a function that pulls information from blockchain about Gen0 kitties for sale and returns genes
-var kittyLog = [];
+// var kittyLog = [];
 
 var pullCatalog = async() => {
     //prone to being updated once marketplace is integrated
     var num = await instance.methods.gen0Counter().call();
-    pullKitty(15); 
+    pullKitty(20); 
   };
 
 var pullKitty = async(num) => {
@@ -106,6 +106,25 @@ var pullKitty = async(num) => {
             console.log(kittyLog);  
         }
         Catalog_onLaunch(kittyLog);
+    return kittyLog;
+};
+
+var pullCarousel = async() => {
+    //prone to being updated once marketplace is integrated
+    var num = await instance.methods.gen0Counter().call();
+    pullKittyforCarousel(20); 
+  };
+
+var pullKittyforCarousel = async(num) => {
+        var kittyLog = [];
+
+        for (let id = 0; id < num; id++) {
+            let kitties = await instance.methods.getKitty(id).call();
+            let kittyGenes = kitties['genes'];
+            kittyLog.push({kittyGenes, id}); 
+            console.log(kittyLog);  
+        }
+        Carousel_onLaunch(kittyLog);
     return kittyLog;
 };
 

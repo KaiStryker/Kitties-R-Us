@@ -28,21 +28,17 @@ function eyeVariation(num, id) {
     switch (num) {
         case '1':
             normalEyes(id)
-            $('#eyeName'+ id).html('Basic')
             break
         case '2': 
             normalEyes(id)
-            $('#eyeName'+ id).html('Chill')
             SleepyEyes(id)
             break
         case '3':
             normalEyes(id)
-            $('#eyeName'+ id).html('Thinker')
             lookingUp(id)
             break
         case '4':
             normalEyes(id)
-            $('#eyeName'+ id).html('Blank')
             blankEyes(id)
             break
         default: 
@@ -55,22 +51,18 @@ function patternVariation(num, id) {
   
     switch (num) {
         case '1':
-            $('#patternName' + id).html('Basic')
             normalpattern(id)
             break
         case '2': 
             normalpattern(id)
-            $('#patternName' + id).html('Third Eye')
             firstpattern(id)
             break
         case '3': 
             normalpattern(id)
-            $('#patternName' + id).html('Swave')
             secondpattern(id)
             break
         case '4': 
             normalpattern(id)
-            $('#patternName' + id).html('Femmy')
             thirdpattern(id)
             break
     }
@@ -99,7 +91,7 @@ function normalpattern(id) {
             "left": "20px",
             "transform": "rotate(75deg)" 
         })
-    $('#details2' + id).css(
+    $('#details2-' + id).css(
         {   "border-radius": "106% 0 95% 0",
             "height": "88px",
             "width": "86px",
@@ -118,7 +110,7 @@ function firstpattern(id) {
             "left": "82px", 
             "border-radius": "90 0 90% 0" 
         })
-    $('#details2' + id).css(
+    $('#details2-' + id).css(
         {   "height": "88px", 
             "width": "86px", 
             "top": "62px", 
@@ -136,7 +128,7 @@ function secondpattern(id) {
             "left": "22px",
             "transform": "rotate(86deg)"
         })
-    $('#details2' + id).css(
+    $('#details2-' + id).css(
         {   "height": "88px", 
             "width": "149px", 
             "top": "34px", 
@@ -152,7 +144,7 @@ function thirdpattern(id) {
             "border-top": "14px solid rgba(255, 255, 255, 0)",
             "border-radius": "40%"
         })
-    $('#details2' + id).css(
+    $('#details2-' + id).css(
         {   "transform": "rotate(17deg)",
             "border-right": "14px solid rgba(255, 255, 255, 0)",
             "border-left": "14px solid rgba(255, 255, 255, 0)",
@@ -170,7 +162,7 @@ function changeleftpatternColor(color, id) {
 }
 
 function changerightpatternColor(color, id) {
-    $('#details2' + id).css('background-color', '#' + color)
+    $('#details2-' + id).css('background-color', '#' + color)
 }
 
 function animationVariation(num, id){
@@ -178,21 +170,17 @@ function animationVariation(num, id){
     switch(num){
         case '1':
             resetAnimations(id);
-            $('#animationName' + id).html('Still')
             break;
         case '2':
             resetAnimations(id);
-            $('#animationName' + id).html('Shaky')
             animationType1(id)
             break;
         case '3':
             resetAnimations(id);
-            $('#animationName' + id).html('Ignite')
             animationType2(id)
             break;
         case '4':
             resetAnimations(id);
-            $('#animationName' + id).html('Shaky')
             animationType3(id)  
             break; 
     }
@@ -202,7 +190,7 @@ function resetAnimations(id) {
     $('#head'+ id).removeClass("movingHead")
     $('#ears'+ id).removeClass("movingHead")
     $('#details' + id).removeClass("ignite")
-    $('#details2' + id).removeClass("ignite")
+    $('#details2-' + id).removeClass("ignite")
     $('#tail' + id).removeClass("wiggle")
 }
 
@@ -215,7 +203,7 @@ function animationType1() {
 function animationType2(id) {
     resetAnimations(id);
     $('#details' + id).addClass("ignite")
-    $('#details2' + id).addClass("ignite")
+    $('#details2-' + id).addClass("ignite")
 }
 
 function animationType3(id) {
