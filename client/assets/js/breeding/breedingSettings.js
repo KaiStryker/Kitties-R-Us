@@ -2,11 +2,13 @@
 var dadboxFilled = false;
 var mumboxFilled = false;
 var maxChecked = 2;
-var dadValue;
-var mumValue;
+var currentlyChecked;
+var dadDna;
+var mumDna;
+var childDna;
 
 var catDna = (dnaStr) => {
-
+    console.log(`catDna: ${ typeof dnaStr}`)
     var dna = {
         //Colors
         "headcolor": dnaStr.substring(0, 2),
@@ -40,38 +42,39 @@ var renderCat = (dna,id) => {
 }
 
 // Cat HTML Div for catalog
-var dadCatBox = (id) => {
+var dadCatBox = (dna,id) => {
 
-    var catDiv = `
+    var catDiv = `<div id="dadDiv" value=${dna}
                  `+ catBody(id) + `                         
-                 `
-    var catView = $('#dadKitty')
-    if (!catView.length) {
-        $('#catsDiv').append(catDiv)
+                 </div>`
+    var catView = $('#dadDiv')
+    if (!catView.length){
+    $('#dadKitty').append(catDiv)
     }
 }
 
-var mumCatBox = (id) => {
+var mumCatBox = (dna,id) => {
 
-    var catDiv = `
+    var catDiv = `<div id="mumDiv" value=${dna}
                  `+ catBody(id) + `                         
-                 `
-    var catView = $('#mumKitty')
-    if (!catView.length) {
-        $('#catsDiv').append(catDiv)
+                 </div>`
+    var catView = $('#mumDiv')
+    if (!catView.length){
+    $('#mumKitty').append(catDiv)
     }
 }
 
-var childCatBox = (id) => {
+var childCatBox = (dna,id) => {
 
-    var catDiv = `
+    var catDiv = `<div id="childDiv" value=${dna}
                  `+ catBody(id) + `                         
-                 `
-    var catView = $('#childKitty')
-    if (!catView.length) {
-        $('#catsDiv').append(catDiv)
+                 </div>`
+    var catView = $('#childDiv')
+    if (!catView.length){
+    $('#childKitty').append(catDiv)
     }
 }
+
 
 var catCarousel = (dna,id) => {
     console.log(dna)
@@ -138,25 +141,17 @@ var catBody = (id) => {
 }
 
 // Each kitty will be clickable and once clicked will be loaded on the display box 
-// Need a way to change filled variables from true to false and vice versa when checkboxed are clicked or unclicked
+// Need a way to change filled(mumboxFilled) variables from true to false and vice versa when checkboxed are clicked or unclicked
 // Make sure only two kitties can be selected at a time 
-$('input[type=checkbox]').change(function() {
-    console.log(this);
-    if ($('input[type=checkbox]:checked').length > maxChecked) return  $(this).prop('checked', false)
+$(document).on('input', 'input:checkbox',function() {
+    // Need to 
+    if (($('input[type=checkbox]:checked')).length > maxChecked) return  console.log(`${$(this).prop('checked', false)}`)
     
-    if ($(this).is(':checked')) {
-      console.log(this)
-      displayKitty();
+    if (this.checked) {
+      currentlyChecked = this.value
+      displayKitty(currentlyChecked)
+      return
     } 
-    else {
-      console.log("Checkbox is unchecked..")
-      if (dadboxFilled){
-          dadboxFilled = false;
-      }
-      else {
-            mumboxFilled = false;
-        }
-      }
     }
     
     
@@ -168,49 +163,50 @@ var loadChildKitty = (_dadDna, _mumDna) => {
     var firstHalf =_dadDna / 100000000; // 11223344 
     var secondHalf = _mumDna % 100000000; // 44332211
     var newDna = firstHalf * 100000000;
-    var childDna = newDna + secondHalf; // 1122334444332211
-
-    childDna = catDna(childDna);
-    childCatBox(id);
-    renderCat(childDna,id);
+    var finalDna = (newDna + secondHalf)
+    var childDna = finalDna.toString(); // 1122334444332211
+    childDnaArray = catDna(childDna);
+    console.log(id)
+    console.log(`childDna is: ${childDna} `)
+    childCatBox(finalDna,id);
+    renderCat(childDnaArray,id);
 }
 
-var loadDadKitty = () => {
+var loadDadKitty = (_dadDna) => {
     var id = "dadKitty";
-    dadDna = catDna(dadValue);
-    dadCatBox(id);
+    let dadDna = catDna(_dadDna);
+    dadCatBox(_dadDna,id);
     renderCat(dadDna,id);
     dadboxFilled = true;
 }
 
-var loadMumKitty = () => {
+var loadMumKitty = (_mumDna) => {
     var id = "mumKitty";
-    mumDna = catDna(mumValue);
-    mumCatBox(id);
+    let mumDna = catDna(_mumDna);
+    mumCatBox(_mumDna,id);
     renderCat(mumDna,id);
     mumboxFilled = true;
 }
 
-var displayKitty = () => {
+var displayKitty = (dna) => {
 // When only one kitty is selected
 // Run dna thru render dna function and display result on screen
-    if((dadboxFilled && mumboxFilled) == false){
-        dadValue = $(this).val()
-        console.log(dadValue)
-        loadDadKitty()
+    if((!dadboxFilled && !mumboxFilled) || (!dadboxFilled && mumboxFilled) == true){
+        dadDna = dna
+        loadDadKitty(dadDna)
         return
     }
 // Once a second kitty is clicked, it will be loaded in the Mum box and it’s DNA will be mixed with the first kitty and the result will be displayed above
-    if(dadboxFilled && (mumboxFilled == false)){
+    if((dadboxFilled && !mumboxFilled)== true){
         //needs work
-        mumValue = $(this).val()
-        console.log(mumValue)
-        loadMumKitty()
+        mumDna = dna
+        loadMumKitty(mumDna)
     }
 // When 2 kitties are selected 
 // Take dna of both cats and run thru blend function
 // Return result on screen thru render dna function 
-    if (dadboxFilled && mumboxFilled) return loadChildKitty(dadValue,mumValue);
+    if (dadboxFilled && mumboxFilled) {
+    loadChildKitty(dadDna,mumDna);}
 }
 
 var Carousel_onLaunch = (KittyLog) => {
