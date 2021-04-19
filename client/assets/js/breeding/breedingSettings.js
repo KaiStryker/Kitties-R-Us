@@ -1,6 +1,4 @@
 // Create a function that takes the string and converts it to Cat-tributes
-var dadboxFilled = false;
-var mumboxFilled = false;
 var maxChecked = 2;
 var currentlyChecked;
 var dadDna;
@@ -8,7 +6,6 @@ var mumDna;
 var childDna;
 
 var catDna = (dnaStr) => {
-    console.log(`catDna: ${ typeof dnaStr}`)
     var dna = {
         //Colors
         "headcolor": dnaStr.substring(0, 2),
@@ -44,18 +41,16 @@ var renderCat = (dna,id) => {
 // Cat HTML Div for catalog
 var dadCatBox = (dna,id) => {
 
-    var catDiv = `<div id="dadDiv" value=${dna}
+    var catDiv = `<div id="dadDiv" value=${dna}>
                  `+ catBody(id) + `                         
                  </div>`
-    var catView = $('#dadDiv')
-    if (!catView.length){
+    var catView = $('#dadKitty')
     $('#dadKitty').append(catDiv)
-    }
 }
 
 var mumCatBox = (dna,id) => {
 
-    var catDiv = `<div id="mumDiv" value=${dna}
+    var catDiv = `<div id="mumDiv" value=${dna}>
                  `+ catBody(id) + `                         
                  </div>`
     var catView = $('#mumDiv')
@@ -66,7 +61,7 @@ var mumCatBox = (dna,id) => {
 
 var childCatBox = (dna,id) => {
 
-    var catDiv = `<div id="childDiv" value=${dna}
+    var catDiv = `<div id="childDiv" value=${dna}>
                  `+ catBody(id) + `                         
                  </div>`
     var catView = $('#childDiv')
@@ -77,19 +72,17 @@ var childCatBox = (dna,id) => {
 
 
 var catCarousel = (dna,id) => {
-    console.log(dna)
-    var catDiv = `<label for="kitty`+ id +`" class="KittyBreeding" id= "kit `+ id + ` ">
+    var catDiv = ` <input type="checkbox" name="Kitty" id="kitty`+ id +`" value= "${dna}">  
+                <label for="kitty`+ id +`" class="KittyBreeding" id= "kit `+ id + ` ">
                  <div class="featureBox">
                  `+ catBody(id) + `
                  </div>
-                 </label>
-                 <input type="checkbox" name="Kitty" id="kitty`+ id +`" value= "${dna}" onclick= "logvalue('kitty`+ id +`')">                         
+                 </label>                       
                  </div>`
-    // var catView = $('#kit' + id)
+    var catView = $('#kitty' + id)
     // if (!catView.length) {
     // $( ".glider-prev" ).before(catDiv);
     $('.glider-track').append(catDiv)
-    // }
 }
 
 
@@ -152,22 +145,29 @@ $(document).on('input', 'input:checkbox',function() {
       displayKitty(currentlyChecked)
       return
     } 
+
+    if (!this.checked){
+        // console.log(this.value == $("#dadDiv").attr('value'))
+        ($("#dadDiv").length & $("#mumDiv").length) & this.value == $("#dadDiv").attr('value') ? $("#dadDiv, #childDiv").remove() : 
+        ($("#dadDiv").length & $("#mumDiv").length) & this.value == $("#mumDiv").attr('value') ? $("#mumDiv, #childDiv").remove() :
+        $("#dadDiv").length & !($("#mumDiv").length) ? $("#dadDiv").remove() : 
+        !($("#dadDiv").length) & ($("#mumDiv").length) ? $("#mumDiv").remove() : null
     }
-    
-    
-    );
+    });
 
 // Function that takes that blends dna of 2 kitties and returns a new one 
 var loadChildKitty = (_dadDna, _mumDna) => {
     var id = "childKitty";
-    var firstHalf =_dadDna / 100000000; // 11223344 
+    var firstHalf = Math.floor(_dadDna / 100000000); // 11223344 
+    console.log(firstHalf)
     var secondHalf = _mumDna % 100000000; // 44332211
+    console.log(secondHalf)
     var newDna = firstHalf * 100000000;
+    console.log(newDna)
     var finalDna = (newDna + secondHalf)
+    console.log(finalDna)
     var childDna = finalDna.toString(); // 1122334444332211
     childDnaArray = catDna(childDna);
-    console.log(id)
-    console.log(`childDna is: ${childDna} `)
     childCatBox(finalDna,id);
     renderCat(childDnaArray,id);
 }
@@ -177,7 +177,6 @@ var loadDadKitty = (_dadDna) => {
     let dadDna = catDna(_dadDna);
     dadCatBox(_dadDna,id);
     renderCat(dadDna,id);
-    dadboxFilled = true;
 }
 
 var loadMumKitty = (_mumDna) => {
@@ -185,28 +184,33 @@ var loadMumKitty = (_mumDna) => {
     let mumDna = catDna(_mumDna);
     mumCatBox(_mumDna,id);
     renderCat(mumDna,id);
-    mumboxFilled = true;
 }
 
 var displayKitty = (dna) => {
 // When only one kitty is selected
 // Run dna thru render dna function and display result on screen
-    if((!dadboxFilled && !mumboxFilled) || (!dadboxFilled && mumboxFilled) == true){
+    if((!($("#dadDiv").length) & !($("#mumDiv").length)) == true){
         dadDna = dna
         loadDadKitty(dadDna)
         return
     }
 // Once a second kitty is clicked, it will be loaded in the Mum box and it’s DNA will be mixed with the first kitty and the result will be displayed above
-    if((dadboxFilled && !mumboxFilled)== true){
-        //needs work
+    if(($("#dadDiv").length & !($("#mumDiv").length))== true){
         mumDna = dna
         loadMumKitty(mumDna)
+    }
+
+//When dadDiv is empty and MumDiv isn't
+    if(!($("#dadDiv").length & ($("#mumDiv").length))== true){ 
+        dadDna = dna
+        loadDadKitty(dadDna)
     }
 // When 2 kitties are selected 
 // Take dna of both cats and run thru blend function
 // Return result on screen thru render dna function 
-    if (dadboxFilled && mumboxFilled) {
-    loadChildKitty(dadDna,mumDna);}
+    if ($("#dadDiv").length & $("#mumDiv").length) {
+    loadChildKitty(dadDna,mumDna)}
+
 }
 
 var Carousel_onLaunch = (KittyLog) => {

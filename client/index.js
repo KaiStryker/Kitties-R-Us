@@ -121,8 +121,7 @@ var pullKittyforCarousel = async(num) => {
         for (let id = 0; id < num; id++) {
             let kitties = await instance.methods.getKitty(id).call();
             let kittyGenes = kitties['genes'];
-            kittyLog.push({kittyGenes, id}); 
-            console.log(kittyLog);  
+            kittyLog.push({kittyGenes, id});  
         }
         Carousel_onLaunch(kittyLog);
     return kittyLog;

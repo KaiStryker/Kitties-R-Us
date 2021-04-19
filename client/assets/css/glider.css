@@ -1,6 +1,6 @@
 .glider-contain {
     width: 100%;
-    margin: 0 auto;
+    margin: 35px auto;
     position: relative;
   }
   .glider {
@@ -133,10 +133,7 @@
     }
   }
 
-  input[type=radio], input[type=checkout] {
-    display: none;
-  }
-
+  
   /* #item-1:checked ~ .glider #pic-1, #item-2:checked ~ .glider #pic-2, #item-3:checked ~ .glider #pic-3, #item-4:checked ~ .glider #pic-4 {
         opacity: .2;
 

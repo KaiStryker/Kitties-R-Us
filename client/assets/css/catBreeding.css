@@ -1,0 +1,27 @@
+input[type=radio], input[type=checkbox] {
+    display: none;
+  }
+
+input[type=checkbox]:checked + label > .featureBox{
+  font-style: normal;
+  border: 3px solid greenyellow;
+} 
+
+h3 {
+  text-align: center;
+}
+
+.breedingInstructions{
+  margin: 16px auto;
+  padding: 16px;
+}
+
+.breedingInstructions > p{
+  color: white;
+}
+
+.breedingButton{
+  position: relative;
+    left: 75%;
+    width: 20%;
+}
