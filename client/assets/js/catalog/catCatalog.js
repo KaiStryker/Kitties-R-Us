@@ -115,13 +115,17 @@ var Catalog_onLaunch = (KittyLog) => {
         let kittyDna = catDna(kittyLog.kittyGenes);
 
         // Create function that loads html of Kittys on catalog page, 
-        catBox(kittyLog.i);
-        renderCat(kittyDna,kittyLog.i);
-        $('#catview' + kittyLog.i).attr('onclick', 'go_to("catDetails.html?catId=' + kittyLog.i + '")')
-        $('#catDNA' + kittyLog.i).html(`
+        catBox(kittyLog.kittyId);
+        renderCat(kittyDna,kittyLog.kittyId);
+        $('#catview' + kittyLog.kittyId).attr('onclick', 'go_to("catDetails.html?catId=' + kittyLog.kittyId + '")')
+        $('#catDNA' + kittyLog.kittyId).html(`
         <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>GEN:</b>`+ kittyLog.kittyGeneration + `</h4></span>
         <br>
         <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>DNA:</b>`+ kittyLog.kittyGenes + `</h4></span>`);
     })
+}
+
+var Breedingpage = () => {
+    window.location.replace("breeding.html")
 }
  

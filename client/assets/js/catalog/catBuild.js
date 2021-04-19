@@ -206,7 +206,7 @@ function resetAnimations(id) {
     $('#tail' + id).removeClass("wiggle")
 }
 
-function animationType1() {
+function animationType1(id) {
     resetAnimations();
     $('#head'+ id).addClass("movingHead")
     $('#ears'+ id).addClass("movingHead")

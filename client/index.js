@@ -1,7 +1,8 @@
 var web3 = new Web3(Web3.givenProvider);
 var instance;
 var user;
-var contractAddress = "0xb0a734Eb141b8e3686E3e32d8dd67A21E08fbFEE";
+var contractAddress = "0x1A23bc6FB16e2Bbce9aF87425e226AD55A463C76";
+// "0x0160f792321B472b496bC68F2933A3ce13eEddD3" - old contract
 var abi;
 
 $(document).ready(function(){
@@ -19,12 +20,11 @@ var SubscriptionCall = () => {
     // Way to subscribe to all events on page load 
   instance.events.Birth().on('data', function(event){
   console.log(event);
-  let owner = event.returnValues.owner;
   let kittenId = event.returnValues.kittenId;
   let mumId = event.returnValues.mumId;
-  let dadId = event.returnValues.genes
-  $("").text("owner:" + owner
-              +" kittenId:" + kittenId
+  let dadId = event.returnValues.dadId
+  let genes = event.returnValues.genes
+  $("").text( +" kittenId:" + kittenId
               +" mumId:" + mumId
               +" dadId:" + dadId
               +" genes:" + genes)
@@ -88,43 +88,58 @@ var createKitty = () => {
 
 // Create a function that pulls information from blockchain about Gen0 kitties for sale and returns genes
 // var kittyLog = [];
+// Update to pull array of caller's kitty ids,
 
 var pullCatalog = async() => {
     //prone to being updated once marketplace is integrated
-    var num = await instance.methods.gen0Counter().call();
-    pullKitty(20); 
+    var kittyArray = await instance.methods.tokensOfOwner(user).call();
+    console.log(kittyArray)
+    pullKitty(kittyArray); 
   };
 
-var pullKitty = async(num) => {
+var pullKitty = async(kittyArray) => {
         var kittyLog = [];
 
-        for (let i = 0; i < num; i++) {
-            let kitties = await instance.methods.getKitty(i).call();
+        for (let i = 0; i < kittyArray.length; i++) {
+            let kittyId = kittyArray[i]
+            let kitties = await instance.methods.getKitty(kittyId).call();
             let kittyGenes = kitties['genes'];
             let kittyGeneration = kitties['generation'];
-            kittyLog.push({kittyGenes, i, kittyGeneration}); 
+            kittyLog.push({kittyGenes, kittyId, kittyGeneration}); 
             console.log(kittyLog);  
         }
         Catalog_onLaunch(kittyLog);
-    return kittyLog;
+    return kittyLog; 
 };
 
 var pullCarousel = async() => {
     //prone to being updated once marketplace is integrated
-    var num = await instance.methods.gen0Counter().call();
-    pullKittyforCarousel(20); 
+    var kittyArray = await instance.methods.tokensOfOwner(user).call();
+    pullKittyforCarousel(kittyArray); 
   };
 
-var pullKittyforCarousel = async(num) => {
+var pullKittyforCarousel = async(kittyArray) => {
         var kittyLog = [];
 
-        for (let id = 0; id < num; id++) {
-            let kitties = await instance.methods.getKitty(id).call();
+        for (let id = 0; id < kittyArray.length; id++) {
+            let kittyId = kittyArray[id]
+            let kitties = await instance.methods.getKitty(kittyId).call();
             let kittyGenes = kitties['genes'];
-            kittyLog.push({kittyGenes, id});  
+            kittyLog.push({kittyGenes, kittyId});
+            console.log(kittyLog);
         }
         Carousel_onLaunch(kittyLog);
     return kittyLog;
 };
+
+var breedKitty = () => {
+    let dadId = parseInt($("#dadDiv").attr('title'))
+    let mumId = parseInt($("#mumDiv").attr('title'))
+    instance.methods.breed(dadId,mumId).send().on
+    ("transactionHash", function(hash){
+        console.log(hash);
+        window.location.replace("catalog.html")
+    }).catch(error => console.error(error))
+}
 
 

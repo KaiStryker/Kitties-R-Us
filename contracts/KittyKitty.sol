@@ -74,7 +74,7 @@ contract Kittycontract is IERC721, Ownable {
     }
 
 
-    function balanceOf(address owner) external view returns (uint256 balance){
+    function balanceOf(address owner) public view returns (uint256 balance){
         return tokenHolders[owner];
     }
    
@@ -279,4 +279,27 @@ contract Kittycontract is IERC721, Ownable {
         birthTime = uint256(kitty.birthTime); 
         generation = uint256(kitty.generation);
     }
+
+    function tokensOfOwner(address _owner) public view returns(uint256[] memory ownerTokens) {
+        uint256 tokenCount = balanceOf(_owner);
+
+        if (tokenCount == 0) {
+            return new uint256[](0);
+        } 
+        else {
+            uint256[] memory result = new uint256[](tokenCount);
+            uint256 totalCats = totalSupply();
+            uint256 resultIndex = 0;
+
+            uint256 catId;
+
+            for (catId = 0; catId < totalCats; catId++) {
+                if (kittyOwners[catId] == _owner) {
+                    result[resultIndex] = catId;
+                    resultIndex++;
+                }
+            }
+            return result;
+            }
+        }
 }
