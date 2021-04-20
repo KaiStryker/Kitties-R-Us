@@ -1,9 +1,9 @@
 var web3 = new Web3(Web3.givenProvider);
 var instance;
 var user;
-var contractAddress = "0x1A23bc6FB16e2Bbce9aF87425e226AD55A463C76";
-// "0x0160f792321B472b496bC68F2933A3ce13eEddD3" - old contract
-var abi;
+var contractAddress = "0xdAC391e04d588Cfc0735814f302D08E1E21Dde19";
+// "0x1A23bc6FB16e2Bbce9aF87425e226AD55A463C76" - old contract
+// var abi;
 
 $(document).ready(function(){
     window.ethereum.enable().then(function(accounts){
@@ -11,7 +11,7 @@ $(document).ready(function(){
         {from: accounts[0], gas:300000, gasPrice:20000000000});
         user = accounts[0];
 
-        console.log(instance);
+        console.log("contract instance: " + instance);
        // SubscriptionCall()
     })
 });
