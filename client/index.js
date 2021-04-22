@@ -11,7 +11,7 @@ $(document).ready(function(){
         {from: accounts[0], gas:300000, gasPrice:20000000000});
         user = accounts[0];
 
-        console.log("contract instance: " + instance);
+        console.log(instance);
        // SubscriptionCall()
     })
 });

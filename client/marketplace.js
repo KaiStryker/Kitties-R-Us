@@ -10,8 +10,30 @@ $(document).ready(function(){
         {from: accounts[0], gas:300000, gasPrice:20000000000});
         user = accounts[0];
 
-        console.log("marketplace contract instance: " + instance);
+        console.log(instance);
        // SubscriptionCall()
     })
 });
+
+var pullCatalog = async() => {
+    //prone to being updated once marketplace is integrated
+    var kittyArray = await instance.methods.getAllTokenOnSale().call();
+    console.log(kittyArray)
+    pullKitty(kittyArray); 
+  };
+
+var pullKitty = async(kittyArray) => {
+    var kittyLog = [];
+
+    for (let i = 0; i < kittyArray.length; i++) {
+        let kittyId = kittyArray[i]
+        let kitties = await instance.methods.getKitty(kittyId).call();
+        let kittyGenes = kitties['genes'];
+        let kittyGeneration = kitties['generation'];
+        kittyLog.push({kittyGenes, kittyId, kittyGeneration}); 
+        console.log(kittyLog);  
+    }
+    catOffers_onLaunch(kittyLog);
+return kittyLog; 
+};
 

@@ -9,8 +9,8 @@
         <script src="assets/bootstrap/js/popper.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="assets/js/web3.min.js"></script>
-        <script src="./abi.js"></script>
-        <script src="./index.js"></script>
+        <script src="./marketabi.js"></script>
+        <script src="./marketplace.js"></script>
       
         <link rel="stylesheet" href="assets/css/mystyle.css">
         <link rel="stylesheet" href="assets/css/colors.css">
@@ -78,15 +78,14 @@
   <div class="container p-5" style="margin-top: 12vh;margin-bottom: 10vh;">
 
     <div align="center">
-    <h1 class="c-white">Catalog</h1>
-    <button type="button" onclick ="Breedingpage()"class="btn btn-success submitButton light-b-shadow"> Breed Kitty</button>
-    <button type="button" onclick ="Offerspage()"class="btn btn-danger submitButton light-b-shadow"> Sell Kitty</button>
+    <h1 class="c-white">Kitty Market </h1>
+    <button type="button" onclick ="offerPage()"class="btn btn-success submitButton light-b-shadow"> Sell Kitty</button>
 </div>
 
 <div class="container middleBox">
     <div class="row" id="catsDiv">
-    </div>
-
+    </div> 
+    
     <div class="row" id="ownersCatsDiv hidden">
 
     </div>
@@ -102,14 +101,14 @@
 </body>
 
 <script>
-    // when page load create the catalog
+   // when page load create the catalog
 $(document).ready(() => {
     setTimeout(() => {
         pullCatalog()
     }, 1000)
 
     setTimeout(()=>{
-        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="popover"]').popover();
     },1500)  
 });
 
@@ -117,8 +116,8 @@ $(document).ready(() => {
 </script>
 
 <script src="assets/js/colors.js"></script>
-<script src="assets/js/catalog/catBuild.js"></script>
-<script src="assets/js/catalog/catCatalog.js"></script>
+<script src="assets/js/catMarket/marketBuild.js"></script>
+<script src="assets/js/catMarket/catMarket.js"></script>
 
 
 

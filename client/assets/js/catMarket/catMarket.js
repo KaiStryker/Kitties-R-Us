@@ -39,7 +39,7 @@ var catBox = (id) => {
 
     var catDiv = `<div class="col-lg-4 pointer fit-content" id="catview` + id + `">
                  <div class="featureBox catDiv">
-                 <div data-toggle="tooltip" title="Click for More Details" data-trigger="hover" data-placement='bottom'>
+                 <div data-toggle="popover" title="Kitty Price" data-html="true" data-trigger="hover" data-content="2 ETH" data-placement='bottom'>
                  `+ catBody(id) + ` 
                  </div>                        
                  </div>
@@ -102,16 +102,15 @@ var catBody = (id) => {
 var cattributes = (id) => {
 
     var Cattributes = `<ul class=" cattributes" style="list-style: none;">
-                            <li><span id="eyeName`+ id + `"></span> eyes</li>
-                            <li><span id="patternName`+ id + `"></span> decoration</li>
-                            <li><span id="animationName`+ id + `"></span> animation </li>
+                            <li><span id="sellerName`+ id + `"></span> Seller: </li>
+                            <li><span id="offerPrice`+ id + `"></span> Price: </li>
                         </ul>`
     return Cattributes
 }
 
 // Use array.map() function to iterate thru first function and apply 2nd and 3rd functions
 
-var Catalog_onLaunch = (KittyLog) => {
+var catOffers_onLaunch = (KittyLog) => {
  
     KittyLog.map( (kittyLog) => {
         let kittyDna = catDna(kittyLog.kittyGenes);
@@ -119,7 +118,7 @@ var Catalog_onLaunch = (KittyLog) => {
         // Create function that loads html of Kittys on catalog page, 
         catBox(kittyLog.kittyId);
         renderCat(kittyDna,kittyLog.kittyId);
-        $('#catview' + kittyLog.kittyId).attr('onclick', 'displayKittypage("catDetails.html?catId=' + kittyLog.kittyId + '")')
+        $('#catview' + kittyLog.kittyId).attr('onclick', 'go_to("catDetails.html?catId=' + kittyLog.kittyId + '")')
         $('#catDNA' + kittyLog.kittyId).html(`
         <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>GEN:</b>`+ kittyLog.kittyGeneration + `</h4></span>
         <br>
@@ -129,9 +128,5 @@ var Catalog_onLaunch = (KittyLog) => {
 
 var Breedingpage = () => {
     window.location.replace("breeding.html")
-}
-
-var displayKittypage = (url) => {
-    window.location.replace(url)
 }
  

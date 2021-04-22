@@ -63,7 +63,7 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
         return (_kittyContract.ownerOf(_kittenId) == _address);
     }
 
-    function setOffer(uint256 _price, uint256 _kittenId) external{
+    function setOffer(uint256 _price, uint256 _kittenId) public{
         require(_ownsKitty(msg.sender, _kittenId), "you are not owner of Kitty");
         require(tokenIdToOffer[_kittenId].active == false, "You can't sell the same order twice"); 
         require(_kittyContract.isApprovedForAll(msg.sender,address(this)), "Contract needs to be approved to transfer Kitty in the future");

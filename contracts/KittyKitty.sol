@@ -3,8 +3,11 @@ pragma solidity ^0.5.12;
 import "./IERC721.sol";
 import "./IERC721Receiver.sol";
 import "./Ownable.sol";
+import "./KittyMarketPlace.sol";
 
 contract Kittycontract is IERC721, Ownable {
+
+    KittyMarketplace private _marketplaceContract;
 
     mapping(address => uint256) public tokenHolders;
     mapping(uint256 => address) kittyOwners;
@@ -239,8 +242,10 @@ contract Kittycontract is IERC721, Ownable {
        
        gen0Counter++;
 
+       uint256 kittyId = _createKitty(0,0,0,_genes,msg.sender);
+        _marketplaceContract.setOffer(0.1 ether, kittyId);
        // Gen0 has no owners, they are owned by the contract or contract owner
-       return _createKitty(0,0,0,_genes,msg.sender);
+       return kittyId;
     }
 
     function _createKitty(
@@ -306,4 +311,7 @@ contract Kittycontract is IERC721, Ownable {
             return result;
             }
         }
+    function setMarketPlaceAddress(address _marketplaceaddress) public onlyOwner {
+        _marketplaceContract = KittyMarketplace(_marketplaceaddress);
+    }
 }
