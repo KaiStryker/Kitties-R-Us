@@ -119,7 +119,7 @@ var Catalog_onLaunch = (KittyLog) => {
         // Create function that loads html of Kittys on catalog page, 
         catBox(kittyLog.kittyId);
         renderCat(kittyDna,kittyLog.kittyId);
-        $('#catview' + kittyLog.kittyId).attr('onclick', 'displayKittypage("catDetails.html?catId=' + kittyLog.kittyId + '")')
+        $('#catview' + kittyLog.kittyId).attr('onclick', 'displayKittypage("placeOffer.html?catId='+ kittyLog.kittyId +'")')
         $('#catDNA' + kittyLog.kittyId).html(`
         <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>GEN:</b>`+ kittyLog.kittyGeneration + `</h4></span>
         <br>

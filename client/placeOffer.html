@@ -21,6 +21,7 @@
         <link rel="stylesheet" href="assets/css/catCatalog.css">
         <link rel="stylesheet" href="assets/css/cats.css">
         <link rel="stylesheet" href="assets/css/animations.css">
+        <link rel="stylesheet" href="assets/css/placeOffer.css">
       </head>
 
       <header>
@@ -47,7 +48,7 @@
                   <a class="nav-link" href="k-factory.html">K-Factory</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="catMarket.html">K-Market </a>
+                    <a class="nav-link" href="catMarket.html">K-Market </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="catalog.html">Catalog</a>
@@ -71,20 +72,43 @@
       <div class="particle particle-1"></div>
   </div>
 
-  <div class="container p-5" style="margin-top: 12vh;margin-bottom: 10vh;">
-
+  <div class="container p-5" style="margin-top: 10vh; margin-bottom: 10vh;">
     <div align="center">
-    <h1 class="c-white">Kitty Market </h1>
+    <h1 class="c-white">Kitty Offer</h1>
 </div>
 
-<div class="container middleBox">
-    <div class="row" id="catsDiv">
-    </div> 
+<div id="message" align="center">
     
-    <div class="row" id="ownersCatsDiv hidden">
+</div>
 
+<div class="container middleBox" style="margin-top: 36px;margin-bottom: -85px;">
+    <div class="row" id="catsOfferDiv">
+        
+        <div class="catinfoDiv">
+            <ul class="cattributes" style="list-style: none;">
+                <li><span id="eyeName"></span></li>
+                <li><span id="patternName"></span></li>
+                <li><span id="animationName"></span></li>
+                <li><span id="genName"></span></li>
+                <li><span id="dnaName"></span></li>
+            </ul>
+            <div id="offerForm">
+                <div class="form-group" id="offerBox">
+                  <label for="exampleInputEmail1" class="c-white">Sell Price</label>
+                  <input type="number" class="form-control" id="sellprice" aria-describedby="emailHelp" placeholder="Enter Eth price">
+                </div>
+                <div id="offerBtns">
+                    <button type="button" class="btn btn-secondary light-b-shadow" id= "approveBtn" onclick="grantKittyApproval()">Approve Contract</button>
+                <button type="button" class="btn btn-success light-b-shadow" id= "offerBtn" onclick="placeKittyOffer()">Place Offer</button>
+                <button type="button" class="btn btn-danger light-b-shadow hidden" id="cancelBtn" onclick="cancelOffer()">Cancel Offer</button>
+                </div>
+            </div>
+            <div id="buyBtn" class="btn-group hidden">
+                <button type="button" class="btn btn-success light-b-shadow" onclick="buyKitty()">Buy Kitty</button>
+                <button type="button" class="btn btn-light ml-2 light-b-shadow" id="ethprice"></button>
+            </div>           
+        </div> 
     </div>
-
 </div>
 
 </div>
@@ -96,23 +120,20 @@
 </body>
 
 <script>
-   // when page load create the catalog
-$(document).ready(() => {
-    setTimeout(() => {
-        pullCatalog()
-    }, 1000)
+    $(document).ready(() => {
+        setTimeout(() => {
+            pullKittyforOfferpage()
+            checkifMarketContractisApproved()
+            checkOffer()
+        }, 100)
+    })
 
-    setTimeout(()=>{
-        $('[data-toggle="popover"]').popover();
-    },100)  
-});
-
-
+   
 </script>
 
 <script src="assets/js/colors.js"></script>
-<script src="assets/js/catMarket/marketBuild.js"></script>
-<script src="assets/js/catMarket/catMarket.js"></script>
+<script src="assets/js/catOffer/placeOfferBuild.js"></script>
+<script src="assets/js/catOffer/placeOffer.js"></script>
 
 
 

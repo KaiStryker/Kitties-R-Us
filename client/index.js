@@ -67,6 +67,7 @@ var getCurrentDna = () => {
 }
 
 var createKitty = () => {
+    console.log('working')
     var dnaStr = getCurrentDna();
     instance.methods.createKittyGen0(dnaStr).send()
     .on("transactionHash", function(hash){
@@ -142,4 +143,21 @@ var breedKitty = () => {
     }).catch(error => console.error(error))
 }
 
+var pullKittyforOfferpage = async() => {
+    var kittyId = getKittyId();
+    console.log(kittyId)
+    var kittyLog = [];0
+        let kitties = await instance.methods.getKitty(kittyId).call();
+        let kittyGenes = kitties['genes'];
+        let kittyGeneration = kitties['generation'];
+        kittyLog.push({kittyGenes, kittyId, kittyGeneration});
+        console.log(kittyLog);
+    CatOffer(kittyLog);
+    return kittyLog;
+};
+
+var getKittyId = () => {
+    var params = new URLSearchParams(window.location.search)
+    return params.get('catId')
+}
 

@@ -1,4 +1,3 @@
-
 // Create a function that takes the string and converts it to Cat-tributes
 
 var catDna = (dnaStr) => {
@@ -35,20 +34,15 @@ var renderCat = (dna,id) => {
 }
 
 //Cat HTML Div for catalogue
-var catBox = (id,price) => {
+var catBox = (id) => {
 
-    var catDiv = `<div class="col-lg-4 pointer fit-content" id="catview` + id + `">
+    var catDiv = `<div class="col-lg-4 pointer fit-content" id="catoffer` + id + `">
                  <div class="featureBox catDiv">
-                 <div data-toggle="popover" title="Kitty Price" data-html="true" data-trigger="hover" data-content= "`+ price +` ETH" data-placement='bottom'>
-                 `+ catBody(id) + ` 
-                 </div>                        
-                 </div>
-                 <div class="dnaDiv" id="catDNA`+ id + `"></div>
-                 `+ cattributes(id, price) + `
+                 `+ catBody(id) + `                    
                 </div>`
-    var catView = $('#catview' + id)
+    var catView = $('#catoffer' + id)
     if (!catView.length) {
-        $('#catsDiv').append(catDiv)
+        $('#catsOfferDiv').append(catDiv)
     }
 }
 
@@ -99,37 +93,27 @@ var catBody = (id) => {
     return single
 }
 
-var cattributes = (id, price, seller) => {
+var cattributes = (id) => {
 
     var Cattributes = `<ul class=" cattributes" style="list-style: none;">
-                            <li><span id="offerPrice`+ id + `"></span> <b> PRICE: </b>` + price +` ETH </li>
+                            <li><span id="eyeName`+ id + `"></span> eyes</li>
+                            <li><span id="patternName`+ id + `"></span> decoration</li>
+                            <li><span id="animationName`+ id + `"></span> animation </li>
                         </ul>`
     return Cattributes
 }
 
-// Use array.map() function to iterate thru first function and apply 2nd and 3rd functions
+var CatOffer = (KittyLog) => {
+        console.log(KittyLog[0])
+        let kittyDna = catDna(KittyLog[0].kittyGenes);
+        let kittyGen = KittyLog[0].kittyGeneration;
 
-var catOffers_onLaunch = (KittyLog) => {
- 
-    KittyLog.map( (kittyLog) => {
-        let kittyDna = catDna(kittyLog.kittyGenes);
-        let kittyPrice = Web3.utils.fromWei(kittyLog.kittyPrice);
-        // Create function that loads html of Kittys on catalog page, 
-        catBox(kittyLog.kittyId, kittyPrice);
-        renderCat(kittyDna,kittyLog.kittyId);
-        $('#catview' + kittyLog.kittyId).attr('onclick', 'displayKittypage("placeOffer.html?catId='+ kittyLog.kittyId +'")')
-        $('#catDNA' + kittyLog.kittyId).html(`
-        <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>GEN:</b>`+ kittyLog.kittyGeneration + `</h4></span>
-        <br>
-        <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>DNA:</b>`+ kittyLog.kittyGenes + `</h4></span>`);
-    })
+        // Create function that loads html of Kittys on offer page, 
+        catBox(KittyLog[0].kittyId);
+        renderCat(kittyDna,KittyLog[0].kittyId);
+
+        $('#genName').html("Generation: " + kittyGen)
+        $('#dnaName').html("DNA: " + KittyLog[0].kittyGenes)
 }
 
-var Breedingpage = () => {
-    window.location.replace("breeding.html")
-}
 
-var displayKittypage = (url) => {
-    window.location.replace(url)
-}
- 
