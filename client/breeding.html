@@ -101,7 +101,7 @@
 <body>
     <header>
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top" style="background: rgba(255,255,255,0.5)!important;">
           <div class="container-fluid">
             <button
               class="navbar-toggler"
@@ -129,7 +129,7 @@
                   <a class="nav-link" href="catalog.html">Catalog</a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link" href="breeding.html">Breeding</a>
+                  <a class="nav-link" href="#">Breeding</a>
                 </li>
               </ul>
             </div>
@@ -148,7 +148,7 @@
 
 
 
-<div class="container p-5" style="margin-top: 12vh;margin-bottom: 10vh;display: flex;
+<div class="container p-5" style="margin-top: 12vh;margin-bottom: 3vh;display: flex;
 flex-direction: column;">
 
 
@@ -158,9 +158,10 @@ flex-direction: column;">
     </div>
 
     <div class="breedingInstructions">
-        <h2 class="white-btn">1. Select two Kitties for breeding
+        <h2 class="white-btn" style="background: ghostwhite!important;">
+            1. Select two Kitties for breeding.
         <br>
-            2. Preview Your Kitty Choices
+            2. Preview Your Kitty Choices.
         <br>
             3. Breed and Give them Some Privacy!
         </h2>
@@ -168,7 +169,7 @@ flex-direction: column;">
    
 
 <div class="glider-contain">
-    <h3 class="c-white">Select Mom and Dad Genes for Breeding</h1>
+    <h3 class="c-white">Select Mom and Dad Genes for Breeding</h3>
 <form id="kittyForm">
 <div class="glider" id="catsDiv">
 </div>
@@ -180,9 +181,9 @@ flex-direction: column;">
 
 </div>
 
-<div class="container middleBox" style="margin-top: 40px;
+<div class="container middleBox" style="margin-top: 10px;
 margin-bottom: 40px;">
-
+  <h3 class="c-white">Preview Kitties</h3>
     <div class="row" id="catsDisplayBox">
         <div class="featureBox" id="dadKitty">
            
@@ -194,8 +195,14 @@ margin-bottom: 40px;">
 
 </div>  
 
-<button type="button" class="btn btn-success breedingButton" onclick="breedKitty()">Breed Kitty</button>
+<button type="button" class="btn btn-success light-b-shadow breedingButton" onclick="breedKitty()">Breed Kitty</button>
 
+</div>
+<footer align="left" style="background: rgba(255,255,255,0.5)!important;">
+  <p>NFT project created by Kareem Williams </br>
+    <a href="http://www.github.com/KaiStryker"> www.github.com/KaiStryker </a>
+  </p>
+</footer>
 <script>
   // when page load create the catalog
   $(document).ready(() => {
@@ -206,7 +213,6 @@ margin-bottom: 40px;">
 </script>
 
 </body>
-
 
 
 <script src="assets/js/colors.js"></script>

@@ -21,7 +21,7 @@
   <body>
         <header>
             <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top" style="background: rgba(255,255,255,0.5)!important;">
               <div class="container-fluid">
                 <button
                   class="navbar-toggler"
@@ -68,261 +68,19 @@
     
     <div class="container p-5" style="margin-top: 12vh;margin-bottom: 10vh;">
         <div align="center">
-        <h1 class="c-white">Kitties-Factory</h1>
-        <p class="c-white">Create your custom Kitty</p>
+        <h1 class="c-white">Kitties R' Us</h1>
+        <p class="c-white">By You, For You!</p>
     </div>
     <div class="row">
-        <div class="col-lg-4 catBox m-2 light-b-shadow">
-            <div class="cat">
-                <div class="cat__ear" id="ears">
-                    <div id="leftEar" class="cat__ear--left">
-                        <div class="cat__ear--left-inside"></div>
-
-                    </div>
-                    <div id="rightEar" class="cat__ear--right">
-                        <div class="cat__ear--right-inside"></div>
-                    </div>
-                </div>
-
-                <div id="head" class="cat__head">
-                    <div id="midDot" class="cat__head-dots">
-                        <div id="leftDot" class="cat__head-dots_first"></div>
-                        <div id="rightDot" class="cat__head-dots_second"></div>
-                    </div>
-                    <div class="cat__eye">
-                        <div class="cat__eye--left">
-                            <span class="pupil-left"></span>
-                        </div>
-                        <div class="cat__eye--right">
-                            <span class="pupil-right"></span>
-                        </div>
-
-                    </div>
-            
-                    <div class="cat__facedetail-left" id="details"></div>
-                    <div class="cat__facedetail-right" id= details2></div>
-                    <div class="cat__nose"></div>
-
-                    <div class="cat__mouth-contour"></div>
-                    <div class="cat__mouth-left"></div>
-                    <div class="cat__mouth-right"></div>
-
-                    <div class="cat__whiskers-left"></div>
-                    <div class="cat__whiskers-right"></div>
-                </div>
-
-                <div class="cat__body">
-
-                    <div class="cat__chest"></div>
-
-                    <div class="cat__chest_inner"></div>
-
-
-                    <div class="cat__paw-left"></div>
-                    <div class="cat__paw-left_inner"></div>
-
-
-                    <div class="cat__paw-right"></div>
-                    <div class="cat__paw-right_inner"></div>
-
-
-                    <div id="tail" class="cat__tail"></div>
-                </div>
-            </div>
-            <br>
-                <div class="dnaDiv" id="catDNA">
-                    <b>
-                        DNA:
-                        <!-- Colors -->
-                         <span id="dnabody"></span>
-                         <span id="dnamouth"></span>
-                         <span id="dnaeyes"></span>
-                         <span id="dnaears"></span>
-                        
-                         <!-- Cattributes -->
-                         <span id="dnashape"></span>
-                         <span id="dnadecoration"></span>
-                         <span id="dnadecorationfirst"></span>
-                         <span id="dnadecorationsecond"></span>
-                         <span id="dnaanimation"></span>
-                         <span id="dnaspecial"></span>
-                    </b>
-                </div>
-            </div>
-            <div class="col-lg-7 cattributes m-2 light-b-shadow">
-                <button type = "button" onclick="colorSwitch()" class = "btn btn-primary"> Colors </button>
-                <button type = "button" onclick="attributeSwitch()" class="btn btn-secondary"> Attributes</button>
-<!-- Cat colors -->
-<div id="catColors">
-                <div class="form-group">
-                    <label for="formControlRange"><b>Head and body</b><span class="badge badge-dark ml-2" id="headcode"></span></label>
-                    <input type="range" min="10" max="98" class="form-control-range" id="bodycolor">
-                </div>
-
-                <div class="form-group">
-                    <label for="formControlRange"><b>Mouth and Tummy</b><span class="badge badge-dark ml-2" id="mouthcode"></span></label>
-                    <input type="range" min="10" max="98" class="form-control-range" id="mouthtummycolor">
-                </div>
-
-                <div class="form-group">
-                    <label for="formControlRange"><b>Eye Color</b><span class="badge badge-dark ml-2" id="eyecode"></span></label>
-                    <input type="range" min="10" max="98" class="form-control-range" id="eyecolor">
-                </div>
-
-                <div class="form-group">
-                    <label for="formControlRange"><b>Ears, Tail and Hands</b><span class="badge badge-dark ml-2" id="tailcode"></span></label>
-                    <input type="range" min="10" max="98" class="form-control-range" id="tailcolor">
-                </div>
-            </div>
-<!-- Car Attributes -->
-<div id="catAttributes" class="hide"> 
-                <div class="form-group">
-                    <label for="formControlRange"><b>Eye Shape</b><span class="badge badge-dark ml-2" id="eyeName"></span></label>
-                    <input type="range" min="1" max="4" class="form-control-range" id="eyeshape">
-                </div>
-
-                <div class="form-group">
-                    <label for="formControlRange"><b>Decorative Pattern</b><span class="badge badge-dark ml-2" id="patternName"></span></label>
-                    <input type="range" min="1" max="4" class="form-control-range" id="decPattern">
-                </div>
-                
-                <div class="form-group">
-                    <label for="formControlRange"><b>Pattern Changes</b>
-                        <div class="row flix">
-                            <div class="patterncolor">
-                                <label for="formControlRange"><b>Pattern Color 1</b><span class="badge badge-dark ml-2" id="Pattern1_code"></span></label>
-                                <input type="range" min="10" max="98" class="form-control-range" id="patterncolor_1">
-                            </div>
-                            <div class="patterncolor">
-                                <label for="formControlRange"><b>Pattern Color 2</b><span class="badge badge-dark ml-2" id="Pattern2_code"></span></label>
-                                <input type="range" min="10" max="98" class="form-control-range" id="patterncolor_2">
-                            </div>
-                        </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="formControlRange"><b>Animations</b><span class="badge badge-dark ml-2" id="animationName"></span></label>
-                    <input type="range" min="1" max="4" class="form-control-range" id="animationPattern">
-                </div>
-        </div>
-
         
-               
-            </div>
-                <div id="kittyButtons">
-                    <button type = "button" onclick="randomKitty()" class = "btn btn-danger randomButton light-b-shadow"> Random Kitty</button>
-                    <button type = "button" onclick="defaultKitty()" class = "btn btn-warning defaultButton light-b-shadow"> Default Kitty</button>
-                    <button type = "button" onclick ="createKitty()"class="btn btn-success submitButton light-b-shadow"> Create Kitty</button>
-                </div>
-            </div>
-            <br> 
         </div>
-        
-        <div class="event-background">
-            <span class="helper"></span>
-                <div class="light-b-shadow">
-                    <div class= "close-button">x</div>
-                    <div class="row">
-                        <div class="col-lg-4 catBox m-2 light-b-shadow">
-                            <div class="cat">
-                                <div class="cat__ear" id="ears2">
-                                    <div id="leftEar" class="cat__ear--left">
-                                        <div class="cat__ear--left-inside"></div>
-                
-                                    </div>
-                                    <div id="rightEar" class="cat__ear--right">
-                                        <div class="cat__ear--right-inside"></div>
-                                    </div>
-                                </div>
-                
-                                <div id="head2" class="cat__head">
-                                    <div id="midDot" class="cat__head-dots">
-                                        <div id="leftDot" class="cat__head-dots_first"></div>
-                                        <div id="rightDot" class="cat__head-dots_second"></div>
-                                    </div>
-                                    <div class="cat__eye">
-                                        <div class="cat__eye--left">
-                                            <span class="pupil-left"></span>
-                                        </div>
-                                        <div class="cat__eye--right">
-                                            <span class="pupil-right"></span>
-                                        </div>
-                
-                                    </div>
-                            
-                                    <div class="cat__facedetail-left" id="details_"></div>
-                                    <div class="cat__facedetail-right" id= details2_></div>
-                                    <div class="cat__nose"></div>
-                
-                                    <div class="cat__mouth-contour"></div>
-                                    <div class="cat__mouth-left"></div>
-                                    <div class="cat__mouth-right"></div>
-                
-                                    <div class="cat__whiskers-left"></div>
-                                    <div class="cat__whiskers-right"></div>
-                                </div>
-                
-                                <div class="cat__body">
-                
-                                    <div class="cat__chest"></div>
-                
-                                    <div class="cat__chest_inner"></div>
-                
-                
-                                    <div class="cat__paw-left"></div>
-                                    <div class="cat__paw-left_inner"></div>
-                
-                
-                                    <div class="cat__paw-right"></div>
-                                    <div class="cat__paw-right_inner"></div>
-                
-                
-                                    <div id="tail2" class="cat__tail"></div>
-                                </div>
-                            </div>
-                            <br>
-                                <div class="dnaDiv" id="catDNA">
-                                    <b>
-                                        DNA:
-                                        <!-- Colors -->
-                                         <span id="dnabody2"></span>
-                                         <span id="dnamouth2"></span>
-                                         <span id="dnaeyes2"></span>
-                                         <span id="dnaears2"></span>
-                                        
-                                         <!-- Cattributes -->
-                                         <span id="dnashape2"></span>
-                                         <span id="dnadecoration2"></span>
-                                         <span id="dnadecorationfirst2"></span>
-                                         <span id="dnadecorationsecond2"></span>
-                                         <span id="dnaanimation2"></span>
-                                         <span id="dnaspecial2"></span>
-                                    </b>
-                                </div>
-                            </div>
-                    </div>
-                    <br></br>
-                    <h6>Congratulations on Minting your new Kitty!</h6>
-                </div>
-        </div>
-
-        <div class="mint-background">
-            <span class="helper"></span>
-                <div class="light-b-shadow">
-                    <div class= "close-button">x</div>
-                    <img src="https://cms.qz.com/wp-content/uploads/2021/03/NFT.gif?quality=75&strip=all&w=1200&h=630&crop=1" 
-                    alt="minted-gif" class="gif_image light-b-shadow">
-                    <br></br>
-                    <h6>Kitty been minted, please be patient!</h6>
-                </div>
-                    
-                </div>
-        </div>
-
-
     </div>
-    <footer align="left">
-        <p>Ivan on Tech Academy Bootcamp July 2020</p>
+    
+    </div>
+    <footer align="left" style="background: rgba(255,255,255,0.5)!important;">
+      <p>NFT project created by Kareem Williams </br>
+        <a href="http://www.github.com/KaiStryker"> www.github.com/KaiStryker </a>
+      </p>
     </footer>
 
   </body>  

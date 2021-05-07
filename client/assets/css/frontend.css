@@ -178,3 +178,10 @@ footer {
 		transform: translateY(-2560px);
 	}
 }
+
+.btn {
+    border-radius: 30px;
+    padding: 11px 22px;
+    font-weight: 600;
+    letter-spacing: 1px;
+} 

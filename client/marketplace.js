@@ -61,7 +61,6 @@ var checkOwner = async() => {
 // function to check offer
 var checkOffer = async() => {
     let kittyId = getKittyId()
-    let kittyOwner = checkOwner()
     let offerDetails = await marketInstance.methods.getOffer(kittyId).call()
     let offerPrice = Web3.utils.fromWei(offerDetails.price, 'ether')
     console.log(offerDetails.seller)
@@ -104,8 +103,7 @@ var buyKitty = async() => {
 
 // create switch function for event listens 
 var marketListeners = () => {
-    marketInstance.events.MarketTransaction().on('message', function(event){
-        console.log(event);
+    marketInstance.events.MarketTransaction().on('data', function(event){
         let eventType = (event.returnValues.TxType).toString();
         switch(eventType) {
             case "Create offer":
