@@ -13,7 +13,8 @@
         <script src="./abi.js"></script>
         <script src="./index.js"></script>
         <script src="./marketplace.js"></script>
-      
+        <script src="assets/js/helper.js"></script>
+
         <link rel="stylesheet" href="assets/css/mystyle.css">
         <link rel="stylesheet" href="assets/css/colors.css">
         <link rel="stylesheet" href="assets/css/factory.css">
@@ -31,8 +32,8 @@
             <button
               class="navbar-toggler"
               type="button"
-              data-mdb-toggle="collapse"
-              data-mdb-target="#navbarExample01"
+              data-toggle="collapse"
+              data-target="#navbarExample01"
               aria-controls="navbarExample01"
               aria-expanded="false"
               aria-label="Toggle navigation"
@@ -41,7 +42,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarExample01">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a class="nav-link" aria-current="page" href="index.html">Home</a>
                 </li>
                 <li class="nav-item">
@@ -117,19 +118,21 @@
     <p>Ivan on Tech Academy Bootcamp July 2020</p>
 </footer>
 
+<script>
+  $(document).ready(() => {
+      setTimeout(() => {
+          pullKittyforOfferpage()
+          checkifMarketContractisApproved()
+          checkOffer()
+      }, 50)
+  })
+
+ 
+</script>
+
 </body>
 
-<script>
-    $(document).ready(() => {
-        setTimeout(() => {
-            pullKittyforOfferpage()
-            checkifMarketContractisApproved()
-            checkOffer()
-        }, 100)
-    })
 
-   
-</script>
 
 <script src="assets/js/colors.js"></script>
 <script src="assets/js/catOffer/placeOfferBuild.js"></script>

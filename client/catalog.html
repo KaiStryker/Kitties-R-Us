@@ -11,6 +11,7 @@
         <script src="assets/js/web3.min.js"></script>
         <script src="./abi.js"></script>
         <script src="./index.js"></script>
+        <script src="assets/js/helper.js"></script>
       
         <link rel="stylesheet" href="assets/css/mystyle.css">
         <link rel="stylesheet" href="assets/css/colors.css">
@@ -28,8 +29,8 @@
             <button
               class="navbar-toggler"
               type="button"
-              data-mdb-toggle="collapse"
-              data-mdb-target="#navbarExample01"
+              data-toggle="collapse"
+              data-target="#navbarExample01"
               aria-controls="navbarExample01"
               aria-expanded="false"
               aria-label="Toggle navigation"
@@ -38,7 +39,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarExample01">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a class="nav-link" aria-current="page" href="index.html">Home</a>
                 </li>
                 <li class="nav-item">
@@ -47,7 +48,7 @@
                 <li class="nav-item">
                   <a class="nav-link" href="catMarket.html">K-Market </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                   <a class="nav-link" href="catalog.html">Catalog</a>
                 </li>
                 <li class="nav-item">
@@ -92,22 +93,20 @@
     <p>Ivan on Tech Academy Bootcamp July 2020</p>
 </footer>
 
-</body>
-
 <script>
-    // when page load create the catalog
+  // when page load create the catalog
 $(document).ready(() => {
-    setTimeout(() => {
-        pullCatalog()
-    }, 1000)
+  setTimeout(() => {
+      pullCatalog()
+  }, 300)
 
-    setTimeout(()=>{
-        $('[data-toggle="tooltip"]').tooltip();
-    },1500)  
+  setTimeout(()=>{
+      $('[data-toggle="tooltip"]').tooltip();
+  },150)  
 });
-
-
 </script>
+
+</body>
 
 <script src="assets/js/colors.js"></script>
 <script src="assets/js/catalog/catBuild.js"></script>

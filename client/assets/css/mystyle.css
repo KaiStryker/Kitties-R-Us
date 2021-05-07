@@ -1,11 +1,11 @@
 
 @font-face {
-  font-family: "Poppins";
-  src        : url("Poppins-Light.ttf");
+  font-family: "Calibri";
+  src        : url("Calibri-Regular.ttf");
 }
 
 body {
-  font-family: Poppins;
+  font-family: Calibri;
   font-weight: 500;
   letter-spacing: 1px; 
 }

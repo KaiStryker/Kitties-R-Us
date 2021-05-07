@@ -1,7 +1,8 @@
 var web3 = new Web3(Web3.givenProvider);
 var instance;
 var user;
-var contractAddress = "0xdAC391e04d588Cfc0735814f302D08E1E21Dde19";
+var contractAddress = "0x90439d6495b035D05E98EDa1b39155140CC229FA"
+// old contract "0xdAC391e04d588Cfc0735814f302D08E1E21Dde19";
 // "0x1A23bc6FB16e2Bbce9aF87425e226AD55A463C76" - old contract
 // var abi;
 
@@ -10,27 +11,26 @@ $(document).ready(function(){
         instance = new web3.eth.Contract(abi, contractAddress, 
         {from: accounts[0], gas:300000, gasPrice:20000000000});
         user = accounts[0];
-
         console.log(instance);
        // SubscriptionCall()
     })
 });
 
-var SubscriptionCall = () => {
-    // Way to subscribe to all events on page load 
-  instance.events.Birth().on('data', function(event){
-  console.log(event);
-  let kittenId = event.returnValues.kittenId;
-  let mumId = event.returnValues.mumId;
-  let dadId = event.returnValues.dadId
-  let genes = event.returnValues.genes
-  $("").text( +" kittenId:" + kittenId
-              +" mumId:" + mumId
-              +" dadId:" + dadId
-              +" genes:" + genes)
-})
-.on('error', console.error);
-  }
+// var SubscriptionCall = () => {
+//     // Way to subscribe to all events on page load 
+//   instance.events.Birth().on('message', function(event){
+//   console.log(event);
+//   let kittenId = event.returnValues.kittenId;
+//   let mumId = event.returnValues.mumId;
+//   let dadId = event.returnValues.dadId
+//   let genes = event.returnValues.genes
+//   $("").text( +" kittenId:" + kittenId
+//               +" mumId:" + mumId
+//               +" dadId:" + dadId
+//               +" genes:" + genes)
+// })
+// .on('error', console.error);
+//   }
 
 var birthCall = async () => {    
     let newEvent = await instance.once('Birth', {
@@ -94,7 +94,6 @@ var createKitty = () => {
 var pullCatalog = async() => {
     //prone to being updated once marketplace is integrated
     var kittyArray = await instance.methods.tokensOfOwner(user).call();
-    console.log(kittyArray)
     pullKitty(kittyArray); 
   };
 
@@ -106,8 +105,7 @@ var pullKitty = async(kittyArray) => {
             let kitties = await instance.methods.getKitty(kittyId).call();
             let kittyGenes = kitties['genes'];
             let kittyGeneration = kitties['generation'];
-            kittyLog.push({kittyGenes, kittyId, kittyGeneration}); 
-            console.log(kittyLog);  
+            kittyLog.push({kittyGenes, kittyId, kittyGeneration});  
         }
         Catalog_onLaunch(kittyLog);
     return kittyLog; 
@@ -127,7 +125,6 @@ var pullKittyforCarousel = async(kittyArray) => {
             let kitties = await instance.methods.getKitty(kittyId).call();
             let kittyGenes = kitties['genes'];
             kittyLog.push({kittyGenes, kittyId});
-            console.log(kittyLog);
         }
         Carousel_onLaunch(kittyLog);
     return kittyLog;
@@ -145,13 +142,11 @@ var breedKitty = () => {
 
 var pullKittyforOfferpage = async() => {
     var kittyId = getKittyId();
-    console.log(kittyId)
     var kittyLog = [];0
         let kitties = await instance.methods.getKitty(kittyId).call();
         let kittyGenes = kitties['genes'];
         let kittyGeneration = kitties['generation'];
         kittyLog.push({kittyGenes, kittyId, kittyGeneration});
-        console.log(kittyLog);
     CatOffer(kittyLog);
     return kittyLog;
 };

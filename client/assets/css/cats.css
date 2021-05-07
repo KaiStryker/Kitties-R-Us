@@ -8,7 +8,9 @@ html {
     overflow-y: scroll;
 }
 body {
-    background: #607d8b;
+    background: #fc5c7d; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #fc5c7d, #6a82fb); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #fc5c7d, #6a82fb); 
  
 }
 

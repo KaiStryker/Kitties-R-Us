@@ -18,3 +18,9 @@ Height: 462px;
 Background-color: ghostwhite;
 min-width: 298px;
 }
+
+@media (min-width: 992px){
+.container {
+    max-width: 1069px;
+    }
+}

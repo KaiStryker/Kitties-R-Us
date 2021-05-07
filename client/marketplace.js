@@ -1,7 +1,8 @@
 var web3 = new Web3(Web3.givenProvider);
 var marketInstance;
 var user;
-var marketAddress = "0x2e7a44DEA57f355ee4D2Bc82bECe0FA69BA403eb";
+var marketAddress = "0x36f88d94123f4194a9fBe0666fE860B53175F5d5"
+// old contract "0x2e7a44DEA57f355ee4D2Bc82bECe0FA69BA403eb";
 // var marketabi;
 
 $(document).ready(function(){
@@ -9,8 +10,8 @@ $(document).ready(function(){
         marketInstance = new web3.eth.Contract(marketabi, marketAddress, 
         {from: accounts[0], gas:300000, gasPrice:20000000000});
         user = web3.utils.toChecksumAddress(accounts[0]);
-        console.log(user)
         console.log(marketInstance);
+        console.log(accounts[0])
         marketListeners();
     })
 });
@@ -18,15 +19,19 @@ $(document).ready(function(){
 var pullCatalog = async() => {
     //prone to being updated once marketplace is integrated
     var kittyArray = await marketInstance.methods.getAllTokenOnSale().call();
-    console.log(kittyArray)
     pullKitty(kittyArray); 
+    console.log(kittyArray)
   };
 
 var pullKitty = async(kittyArray) => {
     var kittyLog = [];
 
-    for (let i = 1; i < kittyArray.length; i++) {
+    for (let i = 0; i < kittyArray.length; i++) {
         let kittyId = kittyArray[i]
+        console.log(typeof kittyId)
+        if(kittyId == 0){
+            continue
+        }
         let kitties = await instance.methods.getKitty(kittyId).call();
         let offerDetails = await marketInstance.methods.getOffer(kittyId).call()
         let kittyPrice = offerDetails['price'];
@@ -34,7 +39,6 @@ var pullKitty = async(kittyArray) => {
         let kittyGenes = kitties['genes'];
         let kittyGeneration = kitties['generation'];
         kittyLog.push({kittyGenes, kittyId, kittyGeneration, kittyPrice, kittySeller}); 
-        console.log(kittyLog);  
     }
     catOffers_onLaunch(kittyLog);
 return kittyLog; 
@@ -45,7 +49,6 @@ var placeKittyOffer = async() => {
     let kittyId = getKittyId()
     let price = $('#sellprice').val()
     let Ethprice = Web3.utils.toWei(price, 'ether');
-    console.log(Ethprice)
     await marketInstance.methods.setOffer(Ethprice,kittyId).send()
 }
 
@@ -58,9 +61,11 @@ var checkOwner = async() => {
 // function to check offer
 var checkOffer = async() => {
     let kittyId = getKittyId()
+    let kittyOwner = checkOwner()
     let offerDetails = await marketInstance.methods.getOffer(kittyId).call()
     let offerPrice = Web3.utils.fromWei(offerDetails.price, 'ether')
-    
+    console.log(offerDetails.seller)
+    console.log(offerDetails)
     if (offerDetails.active == true && offerDetails.seller !== user){
         $('#offerForm').addClass('hidden')
         $('#buyBtn').removeClass('hidden')
@@ -72,6 +77,13 @@ var checkOffer = async() => {
         $('#offerBtn').addClass('hidden')
         $('#offerBox').addClass('hidden')
         $('#cancelBtn').removeClass('hidden')
+        $('#buyBtn').addClass('hidden')
+    }
+    if(offerDetails.active == false && offerDetails.seller !== user){
+        $('#offerForm').removeClass('hidden')
+        $('#offerBtn').removeClass('hidden')
+        $('#offerBox').removeClass('hidden')
+        $('#cancelBtn').addClass('hidden')
         $('#buyBtn').addClass('hidden')
     }
 }
@@ -87,13 +99,12 @@ var buyKitty = async() => {
     let kittyId = getKittyId()
     let offerDetails = await marketInstance.methods.getOffer(kittyId).call()
     let price = offerDetails.price
-    console.log(price)
     await marketInstance.methods.buyKitty(kittyId).send({value: price})
 }
 
 // create switch function for event listens 
 var marketListeners = () => {
-    marketInstance.events.MarketTransaction().on('data', function(event){
+    marketInstance.events.MarketTransaction().on('message', function(event){
         console.log(event);
         let eventType = (event.returnValues.TxType).toString();
         switch(eventType) {
@@ -118,12 +129,6 @@ var marketListeners = () => {
       .on('error', console.error);
 }
 
-var alert_msg = (content, type) => {
-    var str = '';
-    str += '<div class="alert alert-' + type + ' fit-content mt-3" role="alert">' + content + '<button type="button" class="close ml-2" data-dismiss="alert" aria-label="Close"> <i class="far fa-times-circle"></i> </button></div>';    
-    $('#message').html(str)    
-}
-
 var grantKittyApproval = () => {
     instance.methods.setApprovalForAll(marketAddress, true).send()
     .on('receipt', function(receipt){
@@ -138,7 +143,7 @@ var grantKittyApproval = () => {
 
 var checkifMarketContractisApproved = async() => {
     var isApproved = await instance.methods.isApprovedForAll(user, marketAddress).call()
-    console.log(isApproved)
+
     if(isApproved == true){
         $('#approveBtn').addClass('hidden');
         $('#offerBtn').prop('disabled', false);

@@ -22,6 +22,12 @@ h3 {
 
 .breedingButton{
   position: relative;
-    left: 75%;
+    left: 42%;
     width: 20%;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 800px!important;
+  }
 }

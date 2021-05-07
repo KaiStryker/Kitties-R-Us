@@ -1,5 +1,5 @@
 .catBox {
-    background-color: #e2efff;
+    background-color: ghostwhite;
     border-radius: 10px;
     padding-top: 50px;
     padding-left: 23px;
@@ -31,6 +31,8 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    margin-right: -46px;
+    margin-left: -46px;
 }
 
 .flix{
@@ -159,6 +161,8 @@
     align-content: space-between;
     align-items: flex-start;
 }
+
+
 
 
 

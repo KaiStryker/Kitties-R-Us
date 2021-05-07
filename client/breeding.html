@@ -14,6 +14,7 @@
     <script src="./abi.js"></script>
     <script src="assets/js/glider.js"></script>
     <script src="./index.js"></script>
+    <script src="assets/js/helper.js"></script>
 
     <link rel="stylesheet" href="assets/css/mystyle.css">
     <link rel="stylesheet" type="text/css" href="assets/css/glider.css">
@@ -85,7 +86,7 @@
             overflow: scroll;
         }
         .glider-contain {
-            width: 100%;
+            width: 90%;
             max-width: 955px;
             margin: 35px auto;
         }
@@ -105,8 +106,8 @@
             <button
               class="navbar-toggler"
               type="button"
-              data-mdb-toggle="collapse"
-              data-mdb-target="#navbarExample01"
+              data-toggle="collapse"
+              data-target="#navbarExample01"
               aria-controls="navbarExample01"
               aria-expanded="false"
               aria-label="Toggle navigation"
@@ -115,7 +116,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarExample01">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a class="nav-link" aria-current="page" href="index.html">Home</a>
                 </li>
                 <li class="nav-item">
@@ -127,7 +128,7 @@
                 <li class="nav-item">
                   <a class="nav-link" href="catalog.html">Catalog</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                   <a class="nav-link" href="breeding.html">Breeding</a>
                 </li>
               </ul>
@@ -157,7 +158,12 @@ flex-direction: column;">
     </div>
 
     <div class="breedingInstructions">
-        <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+        <h2 class="white-btn">1. Select two Kitties for breeding
+        <br>
+            2. Preview Your Kitty Choices
+        <br>
+            3. Breed and Give them Some Privacy!
+        </h2>
     </div>
    
 
@@ -167,9 +173,6 @@ flex-direction: column;">
 <div class="glider" id="catsDiv">
 </div>
 </form>
-
-    
-
 
 <button aria-label="Previous" class="glider-prev">«</button>
 <button aria-label="Next" class="glider-next">»</button>
@@ -193,16 +196,18 @@ margin-bottom: 40px;">
 
 <button type="button" class="btn btn-success breedingButton" onclick="breedKitty()">Breed Kitty</button>
 
+<script>
+  // when page load create the catalog
+  $(document).ready(() => {
+   setTimeout(() => {
+       pullCarousel()
+   }, 300)
+});
+</script>
+
 </body>
 
-<script>
-    // when page load create the catalog
-    $(document).ready(() => {
-     setTimeout(() => {
-         pullCarousel()
-     }, 1000)
- });
- </script>
+
 
 <script src="assets/js/colors.js"></script>
 <script src="assets/js/breeding/breedingBuild.js"></script>

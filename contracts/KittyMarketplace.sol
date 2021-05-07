@@ -101,11 +101,9 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
         // Delete Kitty from the mapping before paying out to prevent reentry attack 
         delete tokenIdToOffer[kittenId];
         offers[_offer.index].active = false;
-        
         address payable seller = _offer.seller;
+        
         //tranfer the funds to the seller
-        //TODO: Make logic pull not push
-
         if (_offer.price > 0){
             seller.transfer(_offer.price);
         }
