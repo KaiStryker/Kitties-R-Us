@@ -50,6 +50,7 @@ var placeKittyOffer = async() => {
     let price = $('#sellprice').val()
     let Ethprice = Web3.utils.toWei(price, 'ether');
     await marketInstance.methods.setOffer(Ethprice,kittyId).send()
+    $('#catalog-loader').prop('hidden',false)
 }
 
 // function to check owner 
@@ -91,6 +92,7 @@ var checkOffer = async() => {
 var cancelOffer = async() => {
     let kittyId = getKittyId()
     await marketInstance.methods.removeOffer(kittyId).send()
+    $('#deletediv').prop('hidden', false)
 }
 
 // function to buy kitty
@@ -99,6 +101,7 @@ var buyKitty = async() => {
     let offerDetails = await marketInstance.methods.getOffer(kittyId).call()
     let price = offerDetails.price
     await marketInstance.methods.buyKitty(kittyId).send({value: price})
+    $('#catalog-loader').prop('hidden',false)
 }
 
 // create switch function for event listens 
@@ -107,19 +110,20 @@ var marketListeners = () => {
         let eventType = (event.returnValues.TxType).toString();
         switch(eventType) {
             case "Create offer":
-                //alert_msg('Successfully set offer for Kitty id: ' + tokenId, 'success')
                 $('#offerBox').addClass('hidden')
                 $('#offerBtn').addClass('hidden')
                 $('#cancelBtn').removeClass('hidden')
+                $('#catalog-loader').prop('hidden',true)
               break;
             case "Remove offer":
-                //alert_msg('Successfully Offer remove for Kitty id: ' + tokenId, 'success')
                 $('#offerBox').removeClass('hidden')
                 $('#offerBtn').removeClass('hidden')
                 $('#cancelBtn').addClass('hidden')
+                $('#deletediv').prop('hidden', true)
+                //reset input value
+                document.getElementById('sellprice').value = ''
               break;
             case "Buy":
-                //alert_msg('Successfully set offer for Kitty id: ' + tokenId, 'success')
                 window.location.replace("catalog.html")
               break;   
           }

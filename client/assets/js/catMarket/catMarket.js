@@ -123,6 +123,7 @@ var catOffers_onLaunch = (KittyLog) => {
         <br>
         <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>DNA:</b>`+ kittyLog.kittyGenes + `</h4></span>`);
     })
+    $('#catalog-loader').prop('hidden',true)
 }
 
 var Breedingpage = () => {

@@ -114,6 +114,7 @@ var CatOffer = (KittyLog) => {
 
         $('#genName').html("Generation: " + kittyGen)
         $('#dnaName').html("DNA: " + KittyLog[0].kittyGenes)
+        $('#catalog-loader').prop('hidden',true)
 }
 
 
