@@ -26,7 +26,7 @@ body {
     border: 6px solid transparent;
     -webkit-border-radius: 50% 50% 45% 45%;
     border-radius: 50% 50% 45% 45%;
-    background: #ffe7f5;
+    background:rgb(255, 204, 128);
     z-index: 20;
 }
 
@@ -41,7 +41,7 @@ body {
     height: 150px;
     border: 5px solid  transparent;
     border-radius: 90% 0 90% 0;
-    background: #ffcc80;
+    background: rgb(255, 204, 128);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -157,7 +157,7 @@ body {
     position: absolute;
     width: 176px;
     height: 112px;
-    background-color: black;
+    background-color: rgb(255, 243, 224);
     top: 73px;
     left: 22px;
     border-radius: 50px 50px 67px 67px;
@@ -229,7 +229,7 @@ body {
     position: absolute;
     width: 191px;
     height: 209px;
-    background: #ffe7f5;
+    background: rgb(255, 204, 128);
     left: 16px;
     top: -69px;
     border: 5px solid transparent;
@@ -240,7 +240,7 @@ body {
     position: absolute;
     width: 125px;
     height: 92px;
-    background: black;
+    background: rgb(255, 243, 224);
     z-index: 4;
     left: 49px;
     top: 28px;

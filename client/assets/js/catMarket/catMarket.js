@@ -110,7 +110,7 @@ var cattributes = (id, price, seller) => {
 // Use array.map() function to iterate thru first function and apply 2nd and 3rd functions
 
 var catOffers_onLaunch = (KittyLog) => {
- 
+    console.log(KittyLog)
     KittyLog.map( (kittyLog) => {
         let kittyDna = catDna(kittyLog.kittyGenes);
         let kittyPrice = Web3.utils.fromWei(kittyLog.kittyPrice);
@@ -124,6 +124,10 @@ var catOffers_onLaunch = (KittyLog) => {
         <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>DNA:</b>`+ kittyLog.kittyGenes + `</h4></span>`);
     })
     $('#catalog-loader').prop('hidden',true)
+    if(!KittyLog.length){
+        $('#noKittyMessage').prop('hidden', false)
+    }
+   
 }
 
 var Breedingpage = () => {

@@ -112,7 +112,7 @@ var cattributes = (id) => {
 // Use array.map() function to iterate thru first function and apply 2nd and 3rd functions
 
 var Catalog_onLaunch = (KittyLog) => {
- 
+    
     KittyLog.map( (kittyLog) => {
         let kittyDna = catDna(kittyLog.kittyGenes);
 
@@ -126,6 +126,10 @@ var Catalog_onLaunch = (KittyLog) => {
         <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>DNA:</b>`+ kittyLog.kittyGenes + `</h4></span>`);
     })
     $('#catalog-loader').prop('hidden',true)
+    if(!KittyLog.length){
+        $('#noKittyMessage').prop('hidden', false)
+        $('#breedButton').prop('hidden', true)
+    }
 }
 
 var Breedingpage = () => {

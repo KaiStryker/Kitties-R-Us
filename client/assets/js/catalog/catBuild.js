@@ -182,7 +182,7 @@ function animationVariation(num, id){
             break;
         case '2':
             resetAnimations(id);
-            $('#animationName' + id).html('Shaky')
+            $('#animationName' + id).html('Shaky head')
             animationType1(id)
             break;
         case '3':
@@ -192,7 +192,7 @@ function animationVariation(num, id){
             break;
         case '4':
             resetAnimations(id);
-            $('#animationName' + id).html('Shaky')
+            $('#animationName' + id).html('Shaky tail')
             animationType3(id)  
             break; 
     }

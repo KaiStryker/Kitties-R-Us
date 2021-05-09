@@ -33,7 +33,7 @@ $(document).ready(function(){
 //   }
 
 var birthCall = async () => {    
-    let newEvent = await instance.once('Birth', {
+    await instance.once('Birth', {
     filter: {owner: user}
     }, (error,response) => {
         let value = response.returnValues['genes']
@@ -42,7 +42,7 @@ var birthCall = async () => {
 }
 
 var transferCall = async () => {
-    let newEvent = await instance.once('Transfer', {
+    await instance.once('Transfer', {
     filter: {owner: user}
     }, (error,response) => {
             console.log(response.returnValues
