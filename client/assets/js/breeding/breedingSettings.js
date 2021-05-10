@@ -159,7 +159,6 @@ $(document).on('input', 'input:checkbox',function() {
 var loadDadKitty = (_dadDna,dadId) => {
     var id = "dadKitty";
     let dadDna = catDna(_dadDna)
-    console.log(dadDna);
     dadCatBox(_dadDna,id, dadId);
     renderCat(dadDna,id);
 }
@@ -214,3 +213,7 @@ var Carousel_onLaunch = (KittyLog) => {
 //         alert("only 2 kitties can be checked");
 //     }
 // });
+
+$('.mint-background').click(()=> {
+    $('.mint-background').hide();
+})

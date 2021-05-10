@@ -135,9 +135,13 @@ var breedKitty = () => {
     let mumId = parseInt($("#mumDiv").attr('title'))
     instance.methods.breed(dadId,mumId).send().on
     ("transactionHash", function(hash){
-        console.log(hash);
-        window.location.replace("catalog.html")
-    }).catch(error => console.error(error))
+        $('.mint-background').show()
+    })
+    .then(birthCall())
+    .then(()=> {
+         window.location.replace("catalog.html")
+    })
+    .catch(error => console.error(error))
 }
 
 var pullKittyforOfferpage = async() => {
