@@ -8,7 +8,7 @@ var colors = {00: "ae494f",
 06: "c65d1e",
 07: "b2bbd6",
 08: "2d4024",
-9: "4b5715",
+9:  "4b5715",
 10: "ffcc80",
 11: "e57373",
 12: "000000",
@@ -100,7 +100,5 @@ var colors = {00: "ae494f",
 98: "344867"}
 
 function allColors(){
-
 return colors;
-
 }

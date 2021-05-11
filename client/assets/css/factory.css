@@ -65,7 +65,7 @@
 
 /* Popup box BEGIN */
 .event-background{
-    background:rgba(0,0,0,.4);
+    background:rgba(256,236,191,0.4);
     cursor:pointer;
     display:none;
     height:100%;
@@ -114,7 +114,7 @@
 }
 
 .mint-background{
-    background:rgba(0,0,0,.4);
+    background:rgba(256,236,191,0.4);
     cursor:pointer;
     display:none;
     height:100%;

@@ -3,36 +3,16 @@ var instance;
 var user;
 var contractAddress = "0x4f16fD6036f0d346Fe9E11378Ca8E59d6C3D2550"
 var contractOwner;
-// old contract "0x90439d6495b035D05E98EDa1b39155140CC229FA";
-// "0x1A23bc6FB16e2Bbce9aF87425e226AD55A463C76" - old contract
-// var abi;
 
 $(document).ready(function(){
     window.ethereum.enable().then(async function(accounts){
         instance = new web3.eth.Contract(abi, contractAddress, 
-        {from: accounts[0], gas:300000, gasPrice:20000000000});
+        {from: accounts[0]});
         user = web3.utils.toChecksumAddress(accounts[0]);
         contractOwner = await instance.methods.owner().call();
         console.log(instance);
-       // SubscriptionCall()
     })
 });
-
-// var SubscriptionCall = () => {
-//     // Way to subscribe to all events on page load 
-//   instance.events.Birth().on('message', function(event){
-//   console.log(event);
-//   let kittenId = event.returnValues.kittenId;
-//   let mumId = event.returnValues.mumId;
-//   let dadId = event.returnValues.dadId
-//   let genes = event.returnValues.genes
-//   $("").text( +" kittenId:" + kittenId
-//               +" mumId:" + mumId
-//               +" dadId:" + dadId
-//               +" genes:" + genes)
-// })
-// .on('error', console.error);
-//   }
 
 var birthCall = async () => {    
     await instance.once('Birth', {
@@ -47,13 +27,13 @@ var transferCall = async () => {
     await instance.once('Transfer', {
     filter: {owner: user}
     }, (error,response) => {
-            console.log(response.returnValues
-            );
-        })
+         console.log(response.returnValues
+        );
+    })
 }
 
 var getCurrentDna = () => {
-   var dna = ''
+    var dna = ''
     dna += $('#dnabody').html()
     dna += $('#dnamouth').html()
     dna += $('#dnaeyes').html()
@@ -87,22 +67,16 @@ var createKitty = () => {
         console.log('minting was successful!');
     })
     .catch(error => console.error(error))
-    // create landing page that displays Kitty created on the blockchain
 }
 
-// Create a function that pulls information from blockchain about Gen0 kitties for sale and returns genes
-// var kittyLog = [];
-// Update to pull array of caller's kitty ids,
-
+// For Catalog page
 var pullCatalog = async() => {
-    //prone to being updated once marketplace is integrated
     var kittyArray = await instance.methods.tokensOfOwner(user).call();
     pullKitty(kittyArray); 
   };
 
 var pullKitty = async(kittyArray) => {
-        var kittyLog = [];
-
+    var kittyLog = [];
         for (let i = 0; i < kittyArray.length; i++) {
             let kittyId = kittyArray[i]
             let kitties = await instance.methods.getKitty(kittyId).call();
@@ -114,8 +88,8 @@ var pullKitty = async(kittyArray) => {
     return kittyLog; 
 };
 
+// For Breed page
 var pullCarousel = async() => {
-    //prone to being updated once marketplace is integrated
     var kittyArray = await instance.methods.tokensOfOwner(user).call();
     pullKittyforCarousel(kittyArray); 
   };
@@ -147,6 +121,7 @@ var breedKitty = () => {
     .catch(error => console.error(error))
 }
 
+// For offer page
 var pullKittyforOfferpage = async() => {
     var kittyId = getKittyId();
     var kittyLog = [];0

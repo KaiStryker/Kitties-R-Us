@@ -2,13 +2,11 @@ var web3 = new Web3(Web3.givenProvider);
 var marketInstance;
 var user;
 var marketAddress = "0xe027899099Ca590a89dAE1449EB17a5CE29D674e"
-// old contract "0x36f88d94123f4194a9fBe0666fE860B53175F5d5";
-// var marketabi;
 
 $(document).ready(function(){
     window.ethereum.enable().then(function(accounts){
         marketInstance = new web3.eth.Contract(marketabi, marketAddress, 
-        {from: accounts[0], gas:300000, gasPrice:20000000000});
+        {from: accounts[0]});
         user = web3.utils.toChecksumAddress(accounts[0]);
         console.log(marketInstance);
         console.log(accounts[0])
@@ -17,7 +15,6 @@ $(document).ready(function(){
 });
 
 var pullCatalog = async() => {
-    //prone to being updated once marketplace is integrated
     var kittyArray = await marketInstance.methods.getAllTokenOnSale().call();
     pullKitty(kittyArray); 
     console.log(kittyArray)
@@ -44,7 +41,7 @@ var pullKitty = async(kittyArray) => {
 return kittyLog; 
 };
 
-// function to place offer
+// Function to place kiity offer
 var placeKittyOffer = () => {
     let kittyId = getKittyId()
     let price = $('#sellprice').val()
@@ -55,19 +52,18 @@ var placeKittyOffer = () => {
     })  
 }
 
-// function to check owner 
+// Function to check owner 
 var checkOwner = async() => {
     let kittyId = getKittyId()
     return await instance.methods.ownerOf(kittyId).call() 
 }
 
-// function to check offer
+// Function to check offer
 var checkOffer = async() => {
     let kittyId = getKittyId()
     let offerDetails = await marketInstance.methods.getOffer(kittyId).call()
     let offerPrice = Web3.utils.fromWei(offerDetails.price, 'ether')
-    console.log(offerDetails.seller)
-    console.log(offerDetails)
+   
     if (offerDetails.active == true && offerDetails.seller !== user){
         $('#offerForm').addClass('hidden')
         $('#buyBtn').removeClass('hidden')
@@ -90,9 +86,10 @@ var checkOffer = async() => {
     }
 }
 
-// function to cancel offer
+// Function to cancel offer
 var cancelOffer = () => {
     let kittyId = getKittyId()
+
     marketInstance.methods.removeOffer(kittyId).send()
     .on("transactionHash", function(hash){
         $('#deletediv').prop('hidden', false)
@@ -100,11 +97,12 @@ var cancelOffer = () => {
     
 }
 
-// function to buy kitty
+// Function to buy kitty
 var buyKitty = async() => {
     let kittyId = getKittyId()
     let offerDetails = await marketInstance.methods.getOffer(kittyId).call()
     let price = offerDetails.price
+
     marketInstance.methods.buyKitty(kittyId).send({value: price})
     .on("transactionHash", function(hash){
         $('#catalog-loader').prop('hidden',false)
@@ -112,7 +110,6 @@ var buyKitty = async() => {
     
 }
 
-// create switch function for event listens 
 var marketListeners = () => {
     marketInstance.events.MarketTransaction().on('data', function(event){
         let eventType = (event.returnValues.TxType).toString();
@@ -135,20 +132,17 @@ var marketListeners = () => {
                 window.location.replace("catalog.html")
               break;   
           }
-      })
-      .on('error', console.error);
+    })
+    .on('error', console.error);
 }
 
+// Function to approve contract to trade Kitties
 var grantKittyApproval = () => {
     instance.methods.setApprovalForAll(marketAddress, true).send()
     .on('receipt', function(receipt){
-        console.log(receipt)})
-    .then(
-        () => {
         $('#approveBtn').addClass('hidden');
         $('#offerBtn').prop('disabled', false);
-        }
-    )
+    })   
 }
 
 var checkifMarketContractisApproved = async() => {

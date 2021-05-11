@@ -1,8 +1,6 @@
 
-// Create a function that takes the string and converts it to Cat-tributes
-
+// Function that takes the string and converts it to Cat-tributes
 var catDna = (dnaStr) => {
-
     var dna = {
         //Colors
         "headcolor": dnaStr.substring(0, 2),
@@ -19,8 +17,7 @@ var catDna = (dnaStr) => {
     }
     return dna
 }
-// Create a function that logs info from Cat-tribute function into html that is presented on Catalog page
-
+// Function that logs info from Cat-tribute function into html
 var renderCat = (dna,id) => {
 
     headColor(colors[dna.headcolor], id)
@@ -34,9 +31,8 @@ var renderCat = (dna,id) => {
     animationVariation(dna.animation, id)
 }
 
-//Cat HTML Div for catalogue
+// Cat HTML Div for catalogue
 var catBox = (id) => {
-
     var catDiv = `<div class="col-lg-4 pointer fit-content" id="catview` + id + `">
                  <div class="featureBox catDiv">
                  <div data-toggle="tooltip" title="Click for More Details" data-trigger="hover" data-placement='bottom'>
@@ -55,7 +51,6 @@ var catBox = (id) => {
 
 //Simple body of a cat
 var catBody = (id) => {
-
     var single = `<div class="cat__ear" id="ears`+ id + `">
     <div id="leftEar`+ id + `" class="cat__ear--left">
         <div class="cat__ear--left-inside"></div>
@@ -100,7 +95,6 @@ var catBody = (id) => {
 }
 
 var cattributes = (id) => {
-
     var Cattributes = `<ul class=" cattributes" style="list-style: none;">
                             <li><span id="eyeName`+ id + `"></span> eyes</li>
                             <li><span id="patternName`+ id + `"></span> decoration</li>
@@ -109,14 +103,11 @@ var cattributes = (id) => {
     return Cattributes
 }
 
-// Use array.map() function to iterate thru first function and apply 2nd and 3rd functions
-
 var Catalog_onLaunch = (KittyLog) => {
-    
     KittyLog.map( (kittyLog) => {
         let kittyDna = catDna(kittyLog.kittyGenes);
 
-        // Create function that loads html of Kittys on catalog page, 
+        // Functions that loads html of Kittys on catalog page, 
         catBox(kittyLog.kittyId);
         renderCat(kittyDna,kittyLog.kittyId);
         $('#catview' + kittyLog.kittyId).attr('onclick', 'displayKittypage("placeOffer.html?catId='+ kittyLog.kittyId +'")')

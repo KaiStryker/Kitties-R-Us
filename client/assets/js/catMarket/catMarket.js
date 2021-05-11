@@ -1,8 +1,6 @@
 
-// Create a function that takes the string and converts it to Cat-tributes
-
+// Function that takes the string and converts it to Cat-tributes
 var catDna = (dnaStr) => {
-
     var dna = {
         //Colors
         "headcolor": dnaStr.substring(0, 2),
@@ -19,10 +17,8 @@ var catDna = (dnaStr) => {
     }
     return dna
 }
-// Create a function that logs info from Cat-tribute function into html that is presented on Catalog page
-
+// Function that logs info from Cat-tribute function into html
 var renderCat = (dna,id) => {
-
     headColor(colors[dna.headcolor], id)
     mouthColor(colors[dna.mouthColor], id)
     eyeColor(colors[dna.eyesColor], id)
@@ -34,9 +30,8 @@ var renderCat = (dna,id) => {
     animationVariation(dna.animation, id)
 }
 
-//Cat HTML Div for catalogue
+// Cat HTML Div for catalogue
 var catBox = (id,price) => {
-
     var catDiv = `<div class="col-lg-4 pointer fit-content" id="catview` + id + `">
                  <div class="featureBox catDiv">
                  <div data-toggle="popover" title="Kitty Price" data-html="true" data-trigger="hover" data-content= "`+ price +` BNB" data-placement='bottom'>
@@ -53,7 +48,7 @@ var catBox = (id,price) => {
 }
 
 
-//Simple body of a cat
+// Simple body of a cat
 var catBody = (id) => {
 
     var single = `<div class="cat__ear" id="ears`+ id + `">
@@ -100,14 +95,11 @@ var catBody = (id) => {
 }
 
 var cattributes = (id, price, seller) => {
-
     var Cattributes = `<ul class=" cattributes" style="list-style: none;">
                             <li><span id="offerPrice`+ id + `"></span> <b> PRICE: </b>` + price +` BNB </li>
                         </ul>`
     return Cattributes
 }
-
-// Use array.map() function to iterate thru first function and apply 2nd and 3rd functions
 
 var catOffers_onLaunch = (KittyLog) => {
     console.log(KittyLog)

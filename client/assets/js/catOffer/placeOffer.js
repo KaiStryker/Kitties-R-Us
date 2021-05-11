@@ -1,7 +1,5 @@
-// Create a function that takes the string and converts it to Cat-tributes
-
+// Function that takes the string and converts it to Cat-tributes
 var catDna = (dnaStr) => {
-
     var dna = {
         //Colors
         "headcolor": dnaStr.substring(0, 2),
@@ -18,10 +16,9 @@ var catDna = (dnaStr) => {
     }
     return dna
 }
-// Create a function that logs info from Cat-tribute function into html that is presented on Catalog page
 
+// Function that logs info from Cat-tribute function into html
 var renderCat = (dna,id) => {
-
     headColor(colors[dna.headcolor], id)
     mouthColor(colors[dna.mouthColor], id)
     eyeColor(colors[dna.eyesColor], id)
@@ -35,7 +32,6 @@ var renderCat = (dna,id) => {
 
 //Cat HTML Div for catalogue
 var catBox = (id) => {
-
     var catDiv = `<div class="col-lg-4 pointer fit-content" id="catoffer` + id + `">
                  <div class="featureBox catDiv">
                  `+ catBody(id) + `                    
@@ -49,7 +45,6 @@ var catBox = (id) => {
 
 //Simple body of a cat
 var catBody = (id) => {
-
     var single = `<div class="cat__ear" id="ears`+ id + `">
     <div id="leftEar`+ id + `" class="cat__ear--left">
         <div class="cat__ear--left-inside"></div>
@@ -94,7 +89,6 @@ var catBody = (id) => {
 }
 
 var cattributes = (id) => {
-
     var Cattributes = `<ul class=" cattributes" style="list-style: none;">
                             <li><span id="eyeName`+ id + `"></span> eyes</li>
                             <li><span id="patternName`+ id + `"></span> decoration</li>
@@ -104,17 +98,17 @@ var cattributes = (id) => {
 }
 
 var CatOffer = (KittyLog) => {
-        console.log(KittyLog[0])
-        let kittyDna = catDna(KittyLog[0].kittyGenes);
-        let kittyGen = KittyLog[0].kittyGeneration;
+    console.log(KittyLog[0])
+    let kittyDna = catDna(KittyLog[0].kittyGenes);
+    let kittyGen = KittyLog[0].kittyGeneration;
 
-        // Create function that loads html of Kittys on offer page, 
-        catBox(KittyLog[0].kittyId);
-        renderCat(kittyDna,KittyLog[0].kittyId);
+    // Function that loads html of Kittys on offer page, 
+    catBox(KittyLog[0].kittyId);
+    renderCat(kittyDna,KittyLog[0].kittyId);
 
-        $('#genName').html("Generation: " + kittyGen)
-        $('#dnaName').html("DNA: " + KittyLog[0].kittyGenes)
-        $('#catalog-loader').prop('hidden',true)
+    $('#genName').html("Generation: " + kittyGen)
+    $('#dnaName').html("DNA: " + KittyLog[0].kittyGenes)
+    $('#catalog-loader').prop('hidden',true)
 }
 
 

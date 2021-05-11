@@ -14,7 +14,6 @@ function genColors(){
     return colors
 }
 
-//This function code needs to modified so that it works with Your cat code.
 function headColor(color,code) {
     $('.cat__head, .cat__chest').css('background', '#' + color) 
     $('#headcode').html('code: '+ code) 
@@ -45,9 +44,6 @@ function tailColor(color,code){
     $('#dnaears2').html(code)
 }
 
-//###################################################
-//Functions below will be used later on in the project
-//###################################################
 function eyeVariation(num) {
 
     $('#dnashape').html(num)

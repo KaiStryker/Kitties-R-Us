@@ -23,10 +23,8 @@ var catDna = (dnaStr) => {
     return dna
 }
 
-// Create a function that logs info from Cat-tribute function into html that is presented on Catalog page
-
+// Function that logs info from Cat-tribute function into html
 var renderCat = (dna,id) => {
-
     headColor(colors[dna.headcolor], id)
     mouthColor(colors[dna.mouthColor], id)
     eyeColor(colors[dna.eyesColor], id)
@@ -40,7 +38,6 @@ var renderCat = (dna,id) => {
 
 // Cat HTML Div for catalog
 var dadCatBox = (dna,id,dadId) => {
-
     var catDiv = `<div id="dadDiv" value=${dna} title=${dadId}>
                  `+ catBody(id) + `                         
                  </div>`
@@ -49,7 +46,6 @@ var dadCatBox = (dna,id,dadId) => {
 }
 
 var mumCatBox = (dna,id,mumId) => {
-
     var catDiv = `<div id="mumDiv" value=${dna} title=${mumId}>
                  `+ catBody(id) + `                         
                  </div>`
@@ -60,7 +56,6 @@ var mumCatBox = (dna,id,mumId) => {
 }
 
 var childCatBox = (id) => {
-
     var catDiv = `<div id="childDiv" value=${id}>
                  `+ catBody(id) + `                         
                  </div>`
@@ -69,7 +64,6 @@ var childCatBox = (id) => {
     $('#childKitty').append(catDiv)
     }
 }
-
 
 var catCarousel = (dna,id) => {
     var catDiv = ` <input type="checkbox" name="Kitty" id="kitty`+ id +`" value= "${dna}" title="${id}">  
@@ -80,8 +74,6 @@ var catCarousel = (dna,id) => {
                  </label>                       
                  </div>`
     var catView = $('#kitty' + id)
-    // if (!catView.length) {
-    // $( ".glider-prev" ).before(catDiv);
     $('.glider-track').append(catDiv)
 }
 
@@ -137,24 +129,22 @@ var catBody = (id) => {
 // Need a way to change filled(mumboxFilled) variables from true to false and vice versa when checkboxed are clicked or unclicked
 // Make sure only two kitties can be selected at a time 
 $(document).on('input', 'input:checkbox',function() {
-    // Need to 
     if (($('input[type=checkbox]:checked')).length > maxChecked) return  console.log(`${$(this).prop('checked', false)}`)
     
     if (this.checked) {
-      currentlyChecked = this.value
-      currentId = this.title
-      displayKitty(currentlyChecked, currentId)
-      return
+        currentlyChecked = this.value
+        currentId = this.title
+        displayKitty(currentlyChecked, currentId)
+        return
     } 
 
     if (!this.checked){
-        // console.log(this.value == $("#dadDiv").attr('value'))
         ($("#dadDiv").length & $("#mumDiv").length) & this.value == $("#dadDiv").attr('value') ? $("#dadDiv, #childDiv").remove() : 
         ($("#dadDiv").length & $("#mumDiv").length) & this.value == $("#mumDiv").attr('value') ? $("#mumDiv, #childDiv").remove() :
         $("#dadDiv").length & !($("#mumDiv").length) ? $("#dadDiv").remove() : 
         !($("#dadDiv").length) & ($("#mumDiv").length) ? $("#mumDiv").remove() : null
     }
-    });
+});
 
 var loadDadKitty = (_dadDna,dadId) => {
     var id = "dadKitty";
@@ -184,35 +174,22 @@ var displayKitty = (dna, id) => {
         loadMumKitty(mumDna, id)
     }
 
-//When dadDiv is empty and MumDiv isn't
+// When dadDiv is empty and MumDiv isn't
     if(!($("#dadDiv").length & ($("#mumDiv").length))== true){ 
         dadDna = dna
         loadDadKitty(dadDna, id)
     }
-// When 2 kitties are selected 
-// Take dna of both cats and run thru blend function
-// Return result on screen thru render dna function 
 }
 
 var Carousel_onLaunch = (KittyLog) => {
- 
     KittyLog.map( (kittyLog) => {
         let kittyDna = catDna(kittyLog.kittyGenes);
 
         // Function that loads html of Kittys on carousel page, 
         catCarousel(kittyLog.kittyGenes,kittyLog.kittyId);
         renderCat(kittyDna,kittyLog.kittyId);
-
     })
 }
-
-// $('input[type=checkbox]').change(function () {
-//     if ($('input[type=checkbox]:checked').length > maxChecked) {
-//         $(this).prop('checked', false) ;
-//         //create statement appended to html that displays this instead of an alert
-//         alert("only 2 kitties can be checked");
-//     }
-// });
 
 $('.mint-background').click(()=> {
     $('.mint-background').hide();

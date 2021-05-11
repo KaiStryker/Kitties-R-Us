@@ -115,14 +115,6 @@ $('#animationPattern').change(()=>{
     animationVariation(animationNum)
 })
 
-// Variable for tab functions 
-
-// When Color Button is clicked, Color section is shown and Attributes are hidden
-// When Attribute button is clicked, Attribute section is shown and color section is hidden
-
-//To make sure color and 
-
-
 function colorSwitch() {
     $('#catColors').removeClass("hide")
     $('#catAttributes').addClass("hide")
@@ -148,15 +140,6 @@ $('.event-background').click(()=> {
     $('.event-background').hide();
 })
 
-// $('#colorSwitch').click(() => { 
-//         $('#catColors').removeClass("hide")
-//         $('#catAttributes').addClass("hide")
-// })
-
-// $('#attributeSwitch').click(() => { 
-//     $('#catAttributes').removeClass("hide")
-//     $('#catColors').addClass("hide")
-// })
 function randomizesColor() {
     var num = (Math.floor(Math.random() * 89 ) + 10).toString(); 
     return num;
@@ -168,7 +151,6 @@ function randomizesColor() {
   }
 
 function randomKitty() {
-
     var head = randomizesColor()
     var mouth = randomizesColor()
     var eye = randomizesColor()
