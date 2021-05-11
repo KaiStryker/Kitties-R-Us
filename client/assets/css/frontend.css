@@ -185,3 +185,7 @@ footer {
     font-weight: 600;
     letter-spacing: 1px;
 } 
+
+.logo:hover{
+    text-decoration: none;
+}

@@ -16,6 +16,7 @@ contract Kittycontract is IERC721, Ownable {
     mapping(address => mapping(address => bool)) private _operatorApprovals;
 
     uint256 public constant CREATION_LIMIT_GEN0 = 10;
+    uint256 public constant CREATION_LIMIT_USER = 100;
     string public constant _name = "KittyKittys";
     string public constant _symbol = "KTK";
 
@@ -46,6 +47,7 @@ contract Kittycontract is IERC721, Ownable {
     );
 
     uint256 public gen0Counter;
+    uint256 public userCounter;
 
     constructor() public {
         _createKitty(0, 0, 0, uint256(-1), address(0));
@@ -239,12 +241,21 @@ contract Kittycontract is IERC721, Ownable {
 
     function createKittyGen0(uint256 _genes) public onlyOwner returns (uint256) {
        require(gen0Counter < CREATION_LIMIT_GEN0);
-       
        gen0Counter++;
 
        uint256 kittyId = _createKitty(0,0,0,_genes,msg.sender);
        // _marketplaceContract.setOffer(0.1 ether, kittyId);
        // Gen0 has no owners, they are owned by the contract or contract owner
+       return kittyId;
+    }
+
+    function createKitty(uint256 _genes) public payable returns (uint256) {
+       require(userCounter < CREATION_LIMIT_USER);
+       require(msg.sender!= owner);
+       require(msg.value == .02 ether);
+       userCounter++;
+
+       uint256 kittyId = _createKitty(0,0,1,_genes,msg.sender);
        return kittyId;
     }
 
@@ -311,7 +322,8 @@ contract Kittycontract is IERC721, Ownable {
             return result;
             }
         }
-    // function setMarketPlaceAddress(address _marketplaceaddress) public onlyOwner {
-    //     _marketplaceContract = KittyMarketplace(_marketplaceaddress);
-    // }
+
+    function withdrawAll() public onlyOwner returns(bool) { 
+        msg.sender.transfer(address(this).balance);
+    }
 }

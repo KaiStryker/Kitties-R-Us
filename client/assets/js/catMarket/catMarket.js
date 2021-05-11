@@ -39,7 +39,7 @@ var catBox = (id,price) => {
 
     var catDiv = `<div class="col-lg-4 pointer fit-content" id="catview` + id + `">
                  <div class="featureBox catDiv">
-                 <div data-toggle="popover" title="Kitty Price" data-html="true" data-trigger="hover" data-content= "`+ price +` ETH" data-placement='bottom'>
+                 <div data-toggle="popover" title="Kitty Price" data-html="true" data-trigger="hover" data-content= "`+ price +` BNB" data-placement='bottom'>
                  `+ catBody(id) + ` 
                  </div>                        
                  </div>
@@ -102,7 +102,7 @@ var catBody = (id) => {
 var cattributes = (id, price, seller) => {
 
     var Cattributes = `<ul class=" cattributes" style="list-style: none;">
-                            <li><span id="offerPrice`+ id + `"></span> <b> PRICE: </b>` + price +` ETH </li>
+                            <li><span id="offerPrice`+ id + `"></span> <b> PRICE: </b>` + price +` BNB </li>
                         </ul>`
     return Cattributes
 }

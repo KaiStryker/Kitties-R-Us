@@ -1,8 +1,8 @@
 var web3 = new Web3(Web3.givenProvider);
 var marketInstance;
 var user;
-var marketAddress = "0x36f88d94123f4194a9fBe0666fE860B53175F5d5"
-// old contract "0x2e7a44DEA57f355ee4D2Bc82bECe0FA69BA403eb";
+var marketAddress = "0xe027899099Ca590a89dAE1449EB17a5CE29D674e"
+// old contract "0x36f88d94123f4194a9fBe0666fE860B53175F5d5";
 // var marketabi;
 
 $(document).ready(function(){
@@ -45,12 +45,14 @@ return kittyLog;
 };
 
 // function to place offer
-var placeKittyOffer = async() => {
+var placeKittyOffer = () => {
     let kittyId = getKittyId()
     let price = $('#sellprice').val()
     let Ethprice = Web3.utils.toWei(price, 'ether');
-    await marketInstance.methods.setOffer(Ethprice,kittyId).send()
-    $('#catalog-loader').prop('hidden',false)
+    marketInstance.methods.setOffer(Ethprice,kittyId).send()
+    .on("transactionHash", function(hash){
+      $('#catalog-loader').prop('hidden',false)
+    })  
 }
 
 // function to check owner 
@@ -89,10 +91,13 @@ var checkOffer = async() => {
 }
 
 // function to cancel offer
-var cancelOffer = async() => {
+var cancelOffer = () => {
     let kittyId = getKittyId()
-    await marketInstance.methods.removeOffer(kittyId).send()
-    $('#deletediv').prop('hidden', false)
+    marketInstance.methods.removeOffer(kittyId).send()
+    .on("transactionHash", function(hash){
+        $('#deletediv').prop('hidden', false)
+      })
+    
 }
 
 // function to buy kitty
@@ -100,8 +105,11 @@ var buyKitty = async() => {
     let kittyId = getKittyId()
     let offerDetails = await marketInstance.methods.getOffer(kittyId).call()
     let price = offerDetails.price
-    await marketInstance.methods.buyKitty(kittyId).send({value: price})
-    $('#catalog-loader').prop('hidden',false)
+    marketInstance.methods.buyKitty(kittyId).send({value: price})
+    .on("transactionHash", function(hash){
+        $('#catalog-loader').prop('hidden',false)
+      })
+    
 }
 
 // create switch function for event listens 

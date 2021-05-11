@@ -1,16 +1,18 @@
 var web3 = new Web3(Web3.givenProvider);
 var instance;
 var user;
-var contractAddress = "0x90439d6495b035D05E98EDa1b39155140CC229FA"
-// old contract "0xdAC391e04d588Cfc0735814f302D08E1E21Dde19";
+var contractAddress = "0x4f16fD6036f0d346Fe9E11378Ca8E59d6C3D2550"
+var contractOwner;
+// old contract "0x90439d6495b035D05E98EDa1b39155140CC229FA";
 // "0x1A23bc6FB16e2Bbce9aF87425e226AD55A463C76" - old contract
 // var abi;
 
 $(document).ready(function(){
-    window.ethereum.enable().then(function(accounts){
+    window.ethereum.enable().then(async function(accounts){
         instance = new web3.eth.Contract(abi, contractAddress, 
         {from: accounts[0], gas:300000, gasPrice:20000000000});
-        user = accounts[0];
+        user = web3.utils.toChecksumAddress(accounts[0]);
+        contractOwner = await instance.methods.owner().call();
         console.log(instance);
        // SubscriptionCall()
     })
@@ -69,7 +71,8 @@ var getCurrentDna = () => {
 var createKitty = () => {
     console.log('working')
     var dnaStr = getCurrentDna();
-    instance.methods.createKittyGen0(dnaStr).send()
+    (user == contractOwner ? instance.methods.createKittyGen0(dnaStr).send() 
+    :instance.methods.createKitty(dnaStr).send())
     .on("transactionHash", function(hash){
         console.log(hash);
         $('.mint-background').show();
