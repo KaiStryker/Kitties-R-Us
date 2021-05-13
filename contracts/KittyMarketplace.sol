@@ -15,7 +15,7 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
         bool active;
     }
 
-    Offer[] offers;
+    Offer[] public offers;
 
     mapping(uint256 => Offer) tokenIdToOffer;
 
@@ -25,19 +25,9 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
         setKittyContract(_kittyContractAddress);
     }
 
+    // SETTER FUNCTIONS
     function setKittyContract(address _kittyContractAddress) public onlyOwner{
         _kittyContract = Kittycontract(_kittyContractAddress);
-    }
-
-    function getOffer(uint256 _kittenId) public view returns ( address seller, uint256 price, uint256 index, uint256 kittenId, bool active){
-       
-        Offer storage currentOffer = tokenIdToOffer[_kittenId];
-
-        seller = currentOffer.seller;
-        price = currentOffer.price;
-        index = currentOffer.index;
-        kittenId = currentOffer.kittenId;
-        active = currentOffer.active;
     }
 
     function setOffer(uint256 _price, uint256 _kittenId) public{
@@ -90,18 +80,27 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
 
         emit MarketTransaction("Buy", msg.sender, kittenId);
     } 
+    
+    // GETTER FUNCTIONS
+    function getOffer(uint256 _kittenId) public view returns ( address seller, uint256 price, uint256 index, uint256 kittenId, bool active){
+       
+        Offer storage currentOffer = tokenIdToOffer[_kittenId];
 
-    function getAllTokenOnSale() public view  returns(uint256[] memory listOfOffers){
+        seller = currentOffer.seller;
+        price = currentOffer.price;
+        index = currentOffer.index;
+        kittenId = currentOffer.kittenId;
+        active = currentOffer.active;
+    }
+
+    function getAllTokenOnSale() public view returns(uint256[] memory listOfOffers){
         uint256 totalOffers = offers.length;
         
         if(totalOffers == 0){
             return new uint256[](0);
         } else{
-
             uint256[] memory result = new uint256[](totalOffers);
-
             uint256 offerId;
-
             for (offerId = 0; offerId < totalOffers; offerId++){
                 if(offers[offerId].active == true){
                     result[offerId] = offers[offerId].kittenId;

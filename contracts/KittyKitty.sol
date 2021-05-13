@@ -5,8 +5,6 @@ import "./IERC721Receiver.sol";
 import "./Ownable.sol";
 
 contract Kittycontract is IERC721, Ownable {
-
-
     mapping(address => uint256) public tokenHolders;
     mapping(uint256 => address) kittyOwners;
 
@@ -35,7 +33,6 @@ contract Kittycontract is IERC721, Ownable {
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
     event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);
     event ApprovalForAll(address indexed owner, address indexed operator, bool approved);
-    
     event Birth(
         address owner, 
         uint256 kittenId, 
@@ -51,6 +48,25 @@ contract Kittycontract is IERC721, Ownable {
         _createKitty(0, 0, 0, uint256(-1), address(0));
     }
 
+    // SETTER FUNCTIONS
+    function createKittyGen0(uint256 _genes) public onlyOwner returns (uint256) {
+       require(gen0Counter < CREATION_LIMIT_GEN0);
+       gen0Counter++;
+
+       uint256 kittyId = _createKitty(0,0,0,_genes,msg.sender);
+       return kittyId;
+    }
+
+    function createKitty(uint256 _genes) public payable returns (uint256) {
+       require(userCounter < CREATION_LIMIT_USER);
+       require(msg.sender!= owner);
+       require(msg.value == .02 ether);
+       userCounter++;
+
+       uint256 kittyId = _createKitty(0,0,1,_genes,msg.sender);
+       return kittyId;
+    }
+    
     function breed(uint256 _dadId, uint256 _mumId) public returns (uint256) {
        require(_owns(msg.sender, _dadId) && _owns(msg.sender, _mumId));
 
@@ -59,23 +75,21 @@ contract Kittycontract is IERC721, Ownable {
        uint256 newDna = _mixDna(dadDna, mumDna);
        uint256 kidGen = 0;
 
-
-      if(dad_generation <= mum_generation){
+       if(dad_generation <= mum_generation){
           kidGen = mum_generation + 1;
-      }
-      else if (dad_generation > mum_generation){
+       }
+       else if (dad_generation > mum_generation){
           kidGen = dad_generation + 1;
           kidGen /= 2;
-      } 
-      else{
+       } 
+       else{
           kidGen = mum_generation;
-      }
-
+       }
        _createKitty( _mumId, _dadId, uint16(kidGen), newDna, msg.sender);
        return newDna;
     }
 
-    function _mixDna(uint256 _dadDna, uint256 _mumDna) internal returns (uint256) {
+    function _mixDna(uint256 _dadDna, uint256 _mumDna) internal view returns (uint256) {
        uint256[8] memory geneArray;
        uint8 random = uint8( now % 255 );
        uint256 i;
@@ -103,24 +117,6 @@ contract Kittycontract is IERC721, Ownable {
        return newGene;
     }
 
-    function createKittyGen0(uint256 _genes) public onlyOwner returns (uint256) {
-       require(gen0Counter < CREATION_LIMIT_GEN0);
-       gen0Counter++;
-
-       uint256 kittyId = _createKitty(0,0,0,_genes,msg.sender);
-       return kittyId;
-    }
-
-    function createKitty(uint256 _genes) public payable returns (uint256) {
-       require(userCounter < CREATION_LIMIT_USER);
-       require(msg.sender!= owner);
-       require(msg.value == .02 ether);
-       userCounter++;
-
-       uint256 kittyId = _createKitty(0,0,1,_genes,msg.sender);
-       return kittyId;
-    }
-
     function _createKitty(
         uint256 _mumId, 
         uint256 _dadId, 
@@ -143,8 +139,6 @@ contract Kittycontract is IERC721, Ownable {
         return newKittenId;
     }
 
-   
-
     function setApprovalForAll(address _operator, bool _approved) public {
         require(_operator != msg.sender);
 
@@ -152,7 +146,8 @@ contract Kittycontract is IERC721, Ownable {
         emit ApprovalForAll(msg.sender, _operator, _approved);
     }
 
-    function transfer(address _to, uint256 kittenId) external {
+    // TRANSFER AND APPROVAL FUNCTIONS
+    function transfer(address _to, uint256 kittenId) public {
         require (_to != address(0), "address doesn't exist" );
         require (_to != address(this), "address cannot be contract address");
         require (_owns(msg.sender, kittenId), "token doesn't belong to caller");
@@ -160,7 +155,7 @@ contract Kittycontract is IERC721, Ownable {
         _transfer(msg.sender, _to, kittenId);
     }
 
-    function approve(address _approved, uint256 kittenId) external {
+    function approve(address _approved, uint256 kittenId) public {
         require(_owns(msg.sender, kittenId));
 
         _approve(kittenId, _approved);
@@ -210,6 +205,7 @@ contract Kittycontract is IERC721, Ownable {
         msg.sender.transfer(address(this).balance);
     }
 
+    // GETTER FUNCTIONS
     function _checkERC721Support(address _from, address _to, uint256 kittenId, bytes memory _data) internal returns (bool) {
         if (!_isContract(_to) ){
             return true;
@@ -258,7 +254,7 @@ contract Kittycontract is IERC721, Ownable {
             }
     }
 
-    function _isContract(address _to) internal view  returns (bool) {
+    function _isContract(address _to) internal view returns (bool) {
         uint32 size;
         assembly{
             size := extcodesize(_to)
@@ -274,7 +270,28 @@ contract Kittycontract is IERC721, Ownable {
         return kittyIndexToApproved[kittenId] == _claimant;
     }
 
-    function supportsInterface(bytes4 _interfaceId) external view returns (bool) {
+    function _isApprovedOrOwner( address _sender, address _from, address _to, uint256 kittenId) internal view returns (bool){
+        require (_owns(_from, kittenId)); //_from owns the token
+        require (_to != address(0)); // _to address is not zero address
+        require (kittenId < kitties.length); //Token must exist
+
+        //Sender is from OR sender is approved for kittenId OR approvalForAll from _from
+        return (_sender == _from
+        || _approvedFor(_sender, kittenId)
+        || isApprovedForAll(_from, _sender));
+    }
+
+    function getApproved(uint256 _kittenId) public view returns (address){
+        require (_kittenId < kitties.length);
+
+        return kittyIndexToApproved[_kittenId];
+    }
+
+    function isApprovedForAll(address _owner, address _operator) public view returns (bool){
+        return _operatorApprovals[_owner][_operator];
+    }
+
+    function supportsInterface(bytes4 _interfaceId) external pure returns (bool) {
         return ( _interfaceId == _INTERFACE_ID_ERC721 || _interfaceId == _INTERFACE_ID_ERC165);
     }
 
@@ -294,7 +311,7 @@ contract Kittycontract is IERC721, Ownable {
         return _symbol;
     }
 
-    function ownerOf(uint256 kittenId) external view returns (address owner) {
+    function ownerOf(uint256 kittenId) public view returns (address owner) {
         return kittyOwners[kittenId];
     }  
 }
