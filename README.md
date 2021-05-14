@@ -1,2 +1,2 @@
-# academy-kitties-template
-A starter template for bootcamp students building the cryptokitty clone.
+# Kitties R Us
+A NFT platform and marketplace for buying and selling Kitties.
