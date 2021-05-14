@@ -6,7 +6,7 @@ import "./Ownable.sol";
 
 contract Kittycontract is IERC721, Ownable {
     mapping(address => uint256) public tokenHolders;
-    mapping(uint256 => address) kittyOwners;
+    mapping(uint256 => address) public kittyOwners;
 
     mapping(uint256 => address) public kittyIndexToApproved;
     mapping(address => mapping(address => bool)) private _operatorApprovals;
