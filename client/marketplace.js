@@ -1,22 +1,23 @@
-var web3 = new Web3(Web3.givenProvider);
-var marketInstance;
-var user;
-var marketAddress = "0xe027899099Ca590a89dAE1449EB17a5CE29D674e"
+var web3 = new Web3(Web3.givenProvider)
+var marketInstance
+var user
+var marketAddress = "0xf033776fD39F55A85d2847094255eF7468EE0de4"
 
 $(document).ready(function(){
     window.ethereum.enable().then(function(accounts){
         marketInstance = new web3.eth.Contract(marketabi, marketAddress, 
-        {from: accounts[0]});
-        user = web3.utils.toChecksumAddress(accounts[0]);
-        console.log(marketInstance);
+        {from: accounts[0]})
+        user = web3.utils.toChecksumAddress(accounts[0])
+        console.log(marketInstance)
         console.log(accounts[0])
-        marketListeners();
+        marketListeners()
+        approvalEventListener()
     })
 });
 
 var pullCatalog = async() => {
     var kittyArray = await marketInstance.methods.getAllTokenOnSale().call();
-    pullKitty(kittyArray); 
+    pullKitty(kittyArray)
     console.log(kittyArray)
   };
 
@@ -31,13 +32,13 @@ var pullKitty = async(kittyArray) => {
         }
         let kitties = await instance.methods.getKitty(kittyId).call();
         let offerDetails = await marketInstance.methods.getOffer(kittyId).call()
-        let kittyPrice = offerDetails['price'];
-        let kittySeller = offerDetails['seller'];
-        let kittyGenes = kitties['genes'];
-        let kittyGeneration = kitties['generation'];
+        let kittyPrice = offerDetails['price']
+        let kittySeller = offerDetails['seller']
+        let kittyGenes = kitties['genes']
+        let kittyGeneration = kitties['generation']
         kittyLog.push({kittyGenes, kittyId, kittyGeneration, kittyPrice, kittySeller}); 
     }
-    catOffers_onLaunch(kittyLog);
+    catOffers_onLaunch(kittyLog)
 return kittyLog; 
 };
 
@@ -47,7 +48,7 @@ var placeKittyOffer = () => {
     let price = $('#sellprice').val()
     let Ethprice = Web3.utils.toWei(price, 'ether');
     marketInstance.methods.setOffer(Ethprice,kittyId).send()
-    .on("transactionHash", function(hash){
+    .on("transactionHash", () => {
       $('#catalog-loader').prop('hidden',false)
     })  
 }
@@ -91,7 +92,7 @@ var cancelOffer = () => {
     let kittyId = getKittyId()
 
     marketInstance.methods.removeOffer(kittyId).send()
-    .on("transactionHash", function(hash){
+    .on("transactionHash", function(){
         $('#deletediv').prop('hidden', false)
       })
     
@@ -111,7 +112,7 @@ var buyKitty = async() => {
 }
 
 var marketListeners = () => {
-    marketInstance.events.MarketTransaction().on('data', function(event){
+    marketInstance.events.MarketTransaction().on('data', (event) => {
         let eventType = (event.returnValues.TxType).toString();
         switch(eventType) {
             case "Create offer":
@@ -139,21 +140,27 @@ var marketListeners = () => {
 // Function to approve contract to trade Kitties
 var grantKittyApproval = () => {
     instance.methods.setApprovalForAll(marketAddress, true).send()
-    .on('receipt', function(receipt){
-        $('#approveBtn').addClass('hidden');
-        $('#offerBtn').prop('disabled', false);
+    .on('transactionHash', () => {
+        $('#catalog-loader').prop('hidden',false) 
     })   
 }
+
+var approvalEventListener = () => {
+    instance.events.ApprovalForAll().on('data', (event) => {
+        $('#approveBtn').addClass('hidden')
+        $('#offerBtn').prop('disabled', false)
+        $('#catalog-loader').prop('hidden',true)
+})}
 
 var checkifMarketContractisApproved = async() => {
     var isApproved = await instance.methods.isApprovedForAll(user, marketAddress).call()
 
     if(isApproved == true){
-        $('#approveBtn').addClass('hidden');
-        $('#offerBtn').prop('disabled', false);
+        $('#approveBtn').addClass('hidden')
+        $('#offerBtn').prop('disabled', false)
     }
     else if(isApproved !== true){
-        $('#approveBtn').removeClass('hidden');
-        $('#offerBtn').prop('disabled', true);
+        $('#approveBtn').removeClass('hidden')
+        $('#offerBtn').prop('disabled', true)
     }
 }

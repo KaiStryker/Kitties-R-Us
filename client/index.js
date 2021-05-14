@@ -1,7 +1,7 @@
 var web3 = new Web3(Web3.givenProvider);
 var instance;
 var user;
-var contractAddress = "0x4f16fD6036f0d346Fe9E11378Ca8E59d6C3D2550"
+var contractAddress = "0x237c8582798165A5C9cab3f79BAA449C42Ef217c"
 var contractOwner;
 
 $(document).ready(function(){
@@ -50,9 +50,11 @@ var getCurrentDna = () => {
 
 var createKitty = () => {
     console.log('working')
+    var price = web3.utils.toWei(".02", "ether")
+    console.log(price)
     var dnaStr = getCurrentDna();
     (user == contractOwner ? instance.methods.createKittyGen0(dnaStr).send() 
-    :instance.methods.createKitty(dnaStr).send())
+    :instance.methods.createKitty(dnaStr).send({value: price}))
     .on("transactionHash", function(hash){
         console.log(hash);
         $('.mint-background').show();
