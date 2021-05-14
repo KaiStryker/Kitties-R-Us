@@ -1,19 +1,27 @@
-var web3 = new Web3(Web3.givenProvider)
+var web3 = new Web3(window.ethereum)
 var marketInstance
 var user
 var marketAddress = "0xf033776fD39F55A85d2847094255eF7468EE0de4"
 
 $(document).ready(function(){
-    window.ethereum.enable().then(function(accounts){
+    ethereum.request({ method: 'eth_requestAccounts' })
+    .then( (accounts) => {
         marketInstance = new web3.eth.Contract(marketabi, marketAddress, 
-        {from: accounts[0]})
-        user = web3.utils.toChecksumAddress(accounts[0])
-        console.log(marketInstance)
-        console.log(accounts[0])
-        marketListeners()
-        approvalEventListener()
+            {from: accounts[0]})
+            user = web3.utils.toChecksumAddress(accounts[0])
+            console.log(marketInstance)
+            marketListeners()
+            approvalEventListener()
     })
-});
+    .catch((error) => {
+      if (error.code === 4001) {
+        // EIP-1193 userRejectedRequest error
+        console.log('Please connect to MetaMask.');
+      } else {
+        console.error(error);
+      }
+    })
+})
 
 var pullCatalog = async() => {
     var kittyArray = await marketInstance.methods.getAllTokenOnSale().call();
@@ -63,7 +71,7 @@ var checkOwner = async() => {
 var checkOffer = async() => {
     let kittyId = getKittyId()
     let offerDetails = await marketInstance.methods.getOffer(kittyId).call()
-    let offerPrice = Web3.utils.fromWei(offerDetails.price, 'ether')
+    let offerPrice = web3.utils.fromWei(offerDetails.price, 'ether')
    
     if (offerDetails.active == true && offerDetails.seller !== user){
         $('#offerForm').addClass('hidden')

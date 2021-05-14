@@ -1,18 +1,27 @@
-var web3 = new Web3(Web3.givenProvider);
+var web3 = new Web3(window.ethereum);
 var instance;
 var user;
 var contractAddress = "0x237c8582798165A5C9cab3f79BAA449C42Ef217c"
 var contractOwner;
 
 $(document).ready(function(){
-    window.ethereum.enable().then(async function(accounts){
+    ethereum.request({ method: 'eth_requestAccounts' })
+    .then(async (accounts) => {
         instance = new web3.eth.Contract(abi, contractAddress, 
-        {from: accounts[0]});
-        user = web3.utils.toChecksumAddress(accounts[0]);
-        contractOwner = await instance.methods.owner().call();
-        console.log(instance);
+                {from: accounts[0]});
+                user = web3.utils.toChecksumAddress(accounts[0]);
+                contractOwner = await instance.methods.owner().call();
+                console.log(instance);
     })
-});
+    .catch((error) => {
+      if (error.code === 4001) {
+        // EIP-1193 userRejectedRequest error
+        console.log('Please connect to MetaMask.');
+      } else {
+        console.error(error);
+      }
+    })
+})
 
 var birthCall = async () => {    
     await instance.once('Birth', {

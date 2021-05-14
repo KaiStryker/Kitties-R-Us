@@ -105,7 +105,7 @@ var catOffers_onLaunch = (KittyLog) => {
     console.log(KittyLog)
     KittyLog.map( (kittyLog) => {
         let kittyDna = catDna(kittyLog.kittyGenes);
-        let kittyPrice = Web3.utils.fromWei(kittyLog.kittyPrice);
+        let kittyPrice = web3.utils.fromWei(kittyLog.kittyPrice);
         // Create function that loads html of Kittys on catalog page, 
         catBox(kittyLog.kittyId, kittyPrice);
         renderCat(kittyDna,kittyLog.kittyId);
