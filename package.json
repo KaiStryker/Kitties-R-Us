@@ -1,7 +1,7 @@
 {
   "name": "kitties-r-us",
   "version": "1.0.0",
-  "description": "A starter template for bootcamp students building the cryptokitty clone.",
+  "description": "A NFT platform for creating and trading kitties. This project is a clone of CryptoKitties.",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
