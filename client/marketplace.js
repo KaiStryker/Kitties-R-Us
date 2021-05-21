@@ -76,7 +76,7 @@ var checkOffer = async() => {
     if (offerDetails.active == true && offerDetails.seller !== user){
         $('#offerForm').addClass('hidden')
         $('#buyBtn').removeClass('hidden')
-        $('#ethprice').html(offerPrice + ' ETH')
+        $('#ethprice').html(offerPrice + ' BNB')
         $('#ethprice').prop('disabled', true)
     }
     if(offerDetails.active == true && offerDetails.seller == user){
